@@ -1,8 +1,10 @@
 import { useAuth,signOut } from '../../back-end/authContext'
 import Link from 'next/link'
+import { getUserData } from '../../back-end/functions';
 
 export default function Header(props: any) {
   const { user, loading } = useAuth();
+  console.log("user info", user)
 
   return (
     //     <div className="navbar bg-base-100">
@@ -77,7 +79,7 @@ export default function Header(props: any) {
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
-                    <img src="https://placeimg.com/80/80/people" />
+                    <img src={user.claims.picture} />
                   </div>
                 </label>
                 <ul
