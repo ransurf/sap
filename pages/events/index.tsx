@@ -4,11 +4,11 @@ import EventsGroup from "../../components/EventsGroup";
 const events = () => {
   const mockEventList = [
     {
-      id: '123123123',
       title: "Event List 1",
       description: "This is a description",
       events: [
         {
+          eventId: '123123123',
           title: "Event 1",
           description: "This is a description",
           tags: ["tag1", "tag2"],
