@@ -25,12 +25,14 @@ export default function Header(props: any) {
       })
 
     }
-    // console.log("user profile", userProfile)
-    // console.log("user data", userData)
+    console.log("user profile", userProfile)
+    console.log("user data", userData)
   }, [user])
 
-  console.log("user profile", userProfile)
-  console.log("user data", userData)
+  
+
+  // console.log("user profile", userProfile)
+  // console.log("user data", userData)
 
   return (
     //     <div className="navbar bg-base-100">
@@ -73,7 +75,7 @@ export default function Header(props: any) {
     //       </div>
     //     </div>
     <div className="navbar bg-base-100">
-      <div className="navbar-start">
+      <div className="navbar-start justify-start items-start">
         {/* <Link href="/dashboard">
         </Link> */}
         {/* <a className="btn btn-ghost normal-case text-xl">SAP</a> */}
@@ -130,7 +132,11 @@ export default function Header(props: any) {
                   className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                    <a>Settings</a>
+                  <Link href="/settings">
+                      <a className="btn btn-ghost normal-case">
+                        Settings
+                      </a>
+                    </Link>
                   </li>
                   <li>
                     <a onClick={signOut}>Logout</a>

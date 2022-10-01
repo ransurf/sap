@@ -11,7 +11,7 @@ import {
 
 const createUserDocument = async (user: any) => {
   await setDoc(
-    doc(db, `Users/${user?.claim?.user_id}`),
+    doc(db, `Users/${user.uid}`),
     {
       email: user.email,
     },
@@ -26,7 +26,6 @@ const createUserInformation = async (
   bio: string,
   age: number,
   position: string,
-  contactInfo: string,
   location: string
 ) => {
   await setDoc(
@@ -37,7 +36,6 @@ const createUserInformation = async (
       bio: bio,
       age: age,
       position: position,
-      contactInfo: contactInfo,
       location: location,
     },
     { merge: true }
