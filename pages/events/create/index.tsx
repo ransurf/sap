@@ -83,7 +83,7 @@ const CreateEvent = (props: Props) => {
   };
 
   return (
-    <div className="page-container forms-container">
+    <div className="page-container form-container">
       <h1 className="page-title">Create Event</h1>
       <Form
         textInputs={createEventInputFields}
