@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Router from "next/router";
 import React from "react";
 
 export interface EventDetails {
@@ -35,13 +36,8 @@ const EventCard = ({ event }: Props) => {
           ))}
         </div>
       </div>
-      <button className="btn" onClick={() => console.log('view event')}> 
-        <Link href={{
-          pathname: '/EventInfo',
-          query: { id: eventId}
-        }}>
+      <button className="btn" onClick={()=>Router.push({pathname: '/EventInfo', query: { id: eventId}})}> 
             View Event
-        </Link>
       </button>
     </div>
   );
