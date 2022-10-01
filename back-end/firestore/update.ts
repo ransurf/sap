@@ -4,6 +4,7 @@ import { db } from "../firebaseConfig/init";
 const joinEvent = async (user: any, eventID: string) => {
   await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
     joinedEvents: arrayUnion(eventID),
+	participants: arrayUnion(user?.claims?.user_id),
   });
 };
 

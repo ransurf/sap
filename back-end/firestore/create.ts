@@ -49,7 +49,8 @@ const createNewEvent = async (
   date: Timestamp,
   description: string,
   location: string,
-  host: string
+  host: string,
+  maxAttendees: number,
 ) => {
   const docRef = doc(collection(db, "aggregatedEvents"));
   await setDoc(docRef, {
@@ -59,6 +60,7 @@ const createNewEvent = async (
     description: description,
     location: location,
     host: host,
+	maxAttendees: maxAttendees,
   });
 
   const eventID = docRef.id;
