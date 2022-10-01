@@ -71,7 +71,21 @@ const createUserInformation = async (
 };
 
 const createNewEvent = async (eventInfo: EventInfo) => {
-	const { user, title, image, startDate, endDate, office, description, location, host, maxAttendees, extraInfo } = eventInfo;
+	const {
+		user,
+		title,
+		image,
+		startDate,
+		endDate,
+		office,
+		description,
+		location,
+		host,
+		maxAttendees,
+		extraInfo,
+	} = eventInfo;
+
+	console.log("createNewEvent", eventInfo);
 
 	const createEvent = await Create.createNewEvent(
 		user,
@@ -88,7 +102,7 @@ const createNewEvent = async (eventInfo: EventInfo) => {
 	);
 
 	return createEvent;
-};
+};;
 
 const joinEvent = async (user: any, eventID: any, discordID: string) => {
 	await Update.joinEvent(user, eventID, discordID);

@@ -1,11 +1,12 @@
-import { useAuth,signOut } from '../../back-end/authContext'
-import Link from 'next/link'
-import {useEffect, useState} from 'react'
-import { getUserData, getUserProfile } from '../../back-end/functions';
-import Image from 'next/image';
-import logo from '../../assets/logo.png'
-import Router from 'next/router';
-import analytics from '../../utils/analytics';
+import { useAuth, signOut } from "../../back-end/authContext";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getUserData, getUserProfile } from "../../back-end/functions";
+import Image from "next/image";
+import logo from "../../assets/logo.png";
+import Router from "next/router";
+import analytics from "../../utils/analytics";
+import React from "react";
 
 export default function Header(props: any) {
   const { user, loading } = useAuth();
@@ -18,17 +19,16 @@ export default function Header(props: any) {
   useEffect(() => {
     if (user) {
       getUserProfile(user).then((data) => {
-        setUserProfile(data)
-      })
+        setUserProfile(data);
+      });
 
       getUserData(user).then((data) => {
         setUserData(data);
-      })
-
+      });
     }
-    
-    console.log("user profile", userProfile)
-  }, [user])
+
+    console.log("user profile", userProfile);
+  }, [user]);
 
   return (
     //     <div className="navbar bg-base-100">
@@ -71,35 +71,39 @@ export default function Header(props: any) {
     //       </div>
     //     </div>
     <div className="navbar bg-base-100">
-      <div className="navbar-start justify-start items-start">
+      <div className="navbar-start items-start">
         {/* <Link href="/dashboard">
         </Link> */}
         {/* <a className="btn btn-ghost normal-case text-xl">SAP</a> */}
-        <div className="flex-1">
-        {!user && !loading ? (
-            <div className="avatar w-8 rounded">
-              <Image src={logo}/>
-            </div>
-          )
-          :
-          (
+        <div className="flex justify-center">
+          {!user && !loading ? (
+            <Image width={48} height={48} src={logo} alt="SAP Logo" />
+          ) : (
             <>
-            <div className="avatar w-8 rounded">
-              <Image src={logo}/>
-            </div>
-            <Link href="/dashboard">
-            <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
-            </Link>
-            <Link href="/events">
-            <a className="btn btn-ghost normal-case text-xl">Events</a>
-            </Link>
+              <Image width={48} height={48} src={logo} alt="SAP Logo" />
+              <Link href="/dashboard">
+                <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
+              </Link>
+              <Link href="/events">
+                <a className="btn btn-ghost normal-case text-xl">Events</a>
+              </Link>
             </>
-            
           )}
-          </div>
-        
+        </div>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-4">
+        {
+          // create a new event button}
+          user && !loading ? (
+            <Link href="/events/create">
+              <a className="btn btn-primary btn-sm normal-case text-xl">
+                Create Event
+              </a>
+            </Link>
+          ) : (
+            <></>
+          )
+        }
         <div className="dropdown dropdown-end">
           {/* <label tabIndex={0} className="btn btn-ghost btn-circle">
           </label> */}
@@ -120,7 +124,7 @@ export default function Header(props: any) {
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
-                    <img src={userProfile? userProfile.picture : null} />
+                    <img src={userProfile ? userProfile.picture : null} />
                   </div>
                 </label>
                 <ul
@@ -128,16 +132,20 @@ export default function Header(props: any) {
                   className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                  <Link href="/settings">
-                      <a className="btn btn-ghost normal-case">
-                        Settings
-                      </a>
-                  </Link>
+                    <Link href="/settings">
+                      <a className="btn btn-ghost normal-case">Settings</a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="btn btn-ghost normal-case" onClick={() => {
-                      signOut()
-                      Router.push('/')}}>Logout</a>
+                    <a
+                      className="btn btn-ghost normal-case"
+                      onClick={() => {
+                        signOut();
+                        Router.push("/");
+                      }}
+                    >
+                      Logout
+                    </a>
                   </li>
                 </ul>
               </div>

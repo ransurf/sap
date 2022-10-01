@@ -54,7 +54,7 @@ const CreateEvent = (props: Props) => {
     {
       label: "Max Participants (leave empty for unlimited)",
       type: "number",
-      value: "maxParticipants",
+      value: "maxAttendees",
       details: {
         required: "Max participants is required",
       },
@@ -83,7 +83,7 @@ const CreateEvent = (props: Props) => {
   };
 
   return (
-    <div className="page-container forms-container">
+    <div className="page-container form-container">
       <h1 className="page-title">Create Event</h1>
       <Form
         textInputs={createEventInputFields}
