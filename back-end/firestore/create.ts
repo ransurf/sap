@@ -29,7 +29,7 @@ const createUserInformation = async (
   location: string
 ) => {
   await setDoc(
-    doc(db, `Users/${user?.claim.user_id}`),
+    doc(db, `Users/${user?.claims.user_id}`),
     {
       name: name,
       profilePic: profilePic,
@@ -63,7 +63,7 @@ const createNewEvent = async (
 
   const eventID = docRef.id;
   await setDoc(
-    doc(db, `Users/${user?.claim.user_id}`),
+    doc(db, `Users/${user?.claims.user_id}`),
     {
       customEvents: arrayUnion(eventID),
       joinedEvents: arrayUnion(eventID),
