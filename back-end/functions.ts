@@ -16,64 +16,72 @@ interface UserInfo {
   location: string;
 }
 
+interface EventInfo {
+	user: any;
+	title: string;
+	image: string;
+	date: Timestamp;
+	description: string;
+	location: string;
+	host: string;
+	maxAttendees: number;
+}
+
 const signUp = async (email: string, password: string) => {
-  const user = await Auth.signUpUser(email, password);
-  return user;
+	const user = await Auth.signUpUser(email, password);
+	return user;
 };
 
 const signUpGoogle = async () => {
-  const user = await Auth.signUpUserGoogle();
-  return user;
+	const user = await Auth.signUpUserGoogle();
+	return user;
 };
 
 const signInUser = async (email: string, password: string) => {
-  const user = await Auth.signInUser(email, password);
-  return user;
+	const user = await Auth.signInUser(email, password);
+	return user;
 };
 
 const createUserDocument = async (user: any) => {
-  const userDocument = await Create.createUserDocument(user);
-  return userDocument;
+	const userDocument = await Create.createUserDocument(user);
+	return userDocument;
 };
 
 const createUserInformation = async (
-  user: any,
-  name: string,
-  profilePic: string,
-  bio: string,
-  age: number,
-  position: string,
-  location: string
+	user: any,
+	name: string,
+	profilePic: string,
+	bio: string,
+	age: number,
+	position: string,
+	location: string
 ) => {
-  await Create.createUserInformation(
-    user,
-    name,
-    profilePic,
-    bio,
-    age,
-    position,
-    location
-  );
+	await Create.createUserInformation(
+		user,
+		name,
+		profilePic,
+		bio,
+		age,
+		position,
+		location
+	);
 };
 
-const createNewEvent = async (
-  user: any,
-  title: string,
-  image: string,
-  date: Timestamp,
-  description: string,
-  location: string,
-  host: string
-) => {
-  await Create.createNewEvent(
-    user,
-    title,
-    image,
-    date,
-    description,
-    location,
-    host
-  );
+const createNewEvent = async (eventInfo: EventInfo) => {
+	const { user, title, image, date, description, location, host, maxAttendees } = eventInfo;
+
+	const createEvent = await Create.createNewEvent(
+		user,
+		title,
+		image,
+		date,
+		description,
+		location,
+		host,
+		maxAttendees
+	);
+
+	return createEvent;
 };
 
 const joinEvent = async (user: any, eventID: any) => {
@@ -105,6 +113,7 @@ const getAllEvents = async () => {
 
 const updateUserInfo = async (userInfo: UserInfo) => {
   const { user, firstName, lastName, profilePic, bio, age, position, location } = userInfo;
+
   const updatedUserInfo = await Update.updateUserInfo(
     user,
     firstName,
