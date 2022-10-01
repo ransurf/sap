@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, createContext } from 'react'
-import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
+import { onAuthStateChanged, signOut as signout } from "firebase/auth";
+import {auth} from '../back-end/firebaseConfig/init'
 import { setCookie, destroyCookie} from 'nookies'
 
 export type TIdTokenResult = {
@@ -33,7 +34,6 @@ export default function  AuthContextProvider({children} : Props) {
   const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
-    const auth=getAuth()
     onAuthStateChanged(auth, (user) => {
 
         //user returned from firebase not the state
@@ -62,7 +62,6 @@ export default function  AuthContextProvider({children} : Props) {
 export const useAuth = () => useContext(authContext);
 
 export const signOut = async () => {
-  const auth=getAuth()
   destroyCookie(null, 'idToken')
   await signout(auth)
  
