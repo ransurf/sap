@@ -78,18 +78,19 @@ export default function Header(props: any) {
         </Link> */}
         {/* <a className="btn btn-ghost normal-case text-xl">SAP</a> */}
 
-        <div className="avatar">
-        <div className="w-16 rounded">
-          <Image src={logo}/>
-        </div>
-        </div>
-        
-        <Link href="/dashboard">
+        <div className="flex-1">
+          <div className="avatar w-8 rounded">
+            <Image src={logo}/>
+          </div>
+          <Link href="/dashboard">
           <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
-        </Link>
-        <Link href="/events">
+          </Link>
+          <Link href="/events">
           <a className="btn btn-ghost normal-case text-xl">Events</a>
         </Link>
+        </div>
+        
+        
       </div>
       <div className="navbar-end">
         <div className="dropdown dropdown-end">

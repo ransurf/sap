@@ -13,7 +13,9 @@ const getUserDoc = async (user: any) => {
 
   const userSnapshot = await getDoc(userRef);
 
-  return userSnapshot;
+  console.log("Snapshot in getUser", userSnapshot.data());
+
+  return userSnapshot.data();
 };
 
 const getUserProfile = async (user: any) => {
