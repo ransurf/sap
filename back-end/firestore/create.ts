@@ -46,21 +46,27 @@ const createNewEvent = async (
   user: any,
   title: string,
   image: string,
-  date: Timestamp,
+  startDate: Timestamp,
+  endDate: Timestamp,
   description: string,
   location: string,
+  office: string,
   host: string,
   maxAttendees: number,
+  extraInfo: string,
 ) => {
   const docRef = doc(collection(db, "aggregatedEvents"));
   await setDoc(docRef, {
     title: title,
     image: image,
-    date: date,
+    startDate: startDate,
+	endDate: endDate,
     description: description,
     location: location,
+	office: office,
     host: host,
 	maxAttendees: maxAttendees,
+	extraInfo: extraInfo,
   });
 
   const eventID = docRef.id;

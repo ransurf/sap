@@ -1,11 +1,16 @@
 import { arrayRemove, updateDoc, doc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebaseConfig/init";
 
-const joinEvent = async (user: any, eventID: string) => {
-  await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
-    joinedEvents: arrayUnion(eventID),
-	participants: arrayUnion(user?.claims?.user_id),
-  });
+const joinEvent = async (user: any, eventID: string, extraInfo: string) => {
+	await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
+		joinedEvents: arrayUnion(eventID),
+	});
+
+	await updateDoc(doc(db, `aggregatedEvents/${eventID}`), {
+		participants: {
+			[user?.claims?.user_id]: { extraInfo: extraInfo },
+		},
+	});
 };
 
 const leaveEvent = async (user: any, eventID: string) => {

@@ -30,7 +30,7 @@ const getUserProfile = async (user: any) => {
 	return userProfile;
 };
 
-const getAggregatedData = async () => {
+const getAggregatedEvents = async () => {
 	const aggregatedEventsRef = query(collection(db, "aggregatedEvents"));
 
 	const eventsSnapshot = await getDocs(aggregatedEventsRef);
@@ -75,4 +75,4 @@ const getUsersFromEvent = async (eventID: string) => {
 	return users;
 };
 
-export { getUserDoc, getAggregatedData, getUserProfile, getUsersFromEvent, getSpecificData };
+export { getUserDoc, getAggregatedEvents, getUserProfile, getUsersFromEvent, getSpecificData };

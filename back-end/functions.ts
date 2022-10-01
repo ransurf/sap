@@ -20,11 +20,14 @@ interface EventInfo {
 	user: any;
 	title: string;
 	image: string;
-	date: Timestamp;
+	startDate: Timestamp;
+	endDate: Timestamp;
 	description: string;
 	location: string;
+	office: string;
 	host: string;
 	maxAttendees: number;
+	extraInfo: string;
 }
 
 const signUp = async (email: string, password: string) => {
@@ -68,24 +71,27 @@ const createUserInformation = async (
 };
 
 const createNewEvent = async (eventInfo: EventInfo) => {
-	const { user, title, image, date, description, location, host, maxAttendees } = eventInfo;
+	const { user, title, image, startDate, endDate, office, description, location, host, maxAttendees, extraInfo } = eventInfo;
 
 	const createEvent = await Create.createNewEvent(
 		user,
 		title,
 		image,
-		date,
+		startDate,
+		endDate,
 		description,
 		location,
+		office,
 		host,
-		maxAttendees
+		maxAttendees,
+		extraInfo
 	);
 
 	return createEvent;
 };
 
-const joinEvent = async (user: any, eventID: any) => {
-  await Update.joinEvent(user, eventID);
+const joinEvent = async (user: any, eventID: any, discordID: string) => {
+	await Update.joinEvent(user, eventID, discordID);
 };
 
 const leaveEvent = async (user: any, eventID: any) => {
@@ -107,7 +113,7 @@ const getUserProfile = async (user: any) => {
 };
 
 const getAllEvents = async () => {
-  const allEvents = await Read.getAggregatedData();
+  const allEvents = await Read.getAggregatedEvents();
   return allEvents;
 };
 
