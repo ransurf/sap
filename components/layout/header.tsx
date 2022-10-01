@@ -73,7 +73,7 @@ export default function Header(props: any) {
     //       </div>
     //     </div>
     <div className="navbar bg-base-100">
-      <div className="navbar-start">
+      <div className="navbar-start justify-start items-start">
         {/* <Link href="/dashboard">
         </Link> */}
         {/* <a className="btn btn-ghost normal-case text-xl">SAP</a> */}
