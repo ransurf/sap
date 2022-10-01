@@ -1,11 +1,31 @@
 import { useAuth,signOut } from '../../back-end/authContext'
 import Link from 'next/link'
-import { getUserData } from '../../back-end/functions';
+import {useEffect, useState} from 'react'
+import { getUserData, getUserProfile } from '../../back-end/functions';
 
 export default function Header(props: any) {
   const { user, loading } = useAuth();
   console.log("user info", user)
   console.log("user id", user?.claims.user_id)
+  const [userProfile, setUserProfile] = useState<any>(null);
+
+  const [userData, setUserData] = useState<any>(null);
+
+  useEffect(() => {
+    if (user) {
+      getUserProfile(user).then((data) => {
+        setUserProfile(data);
+      })
+
+      getUserData(user).then((data) => {
+        setUserData(data);
+      })
+
+    }
+  }, [user])
+
+  console.log("user profile", userProfile)
+  console.log("user data", userData)
 
   return (
     //     <div className="navbar bg-base-100">
@@ -80,7 +100,7 @@ export default function Header(props: any) {
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
-                    <img src={user.claims.picture} />
+                    <img src={userProfile ? userProfile.picture : null} />
                   </div>
                 </label>
                 <ul

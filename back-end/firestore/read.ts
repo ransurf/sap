@@ -17,7 +17,7 @@ const getUserDoc = async (user: any) => {
 };
 
 const getUserProfile = async (user: any) => {
-  const userProfile = user.claims;
+  const userProfile = user?.claims;
 
   return userProfile;
 };
