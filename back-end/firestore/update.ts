@@ -2,13 +2,13 @@ import { arrayRemove, updateDoc, doc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebaseConfig/init";
 
 const joinEvent = async (user: any, eventID: string) => {
-  await updateDoc(doc(db, `Users/${user?.claim?.user_id}`), {
+  await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
     joinedEvents: arrayUnion(eventID),
   });
 };
 
 const leaveEvent = async (user: any, eventID: string) => {
-  await updateDoc(doc(db, `Users/${user?.claim?.user_id}`), {
+  await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
     joinedEvents: arrayRemove(eventID),
   });
 };
@@ -21,7 +21,7 @@ const updateUserInfo = async (user: any,
   age: number,
   position: string,
   location: string) => {
-  await updateDoc(doc(db, `Users/${user?.claim?.user_id}`), {
+  await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
     firstName: firstName ? firstName : null,
     lastName: lastName ? lastName : null,
     profilePic: profilePic ? profilePic : null,
