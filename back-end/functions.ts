@@ -80,8 +80,13 @@ const deleteEvent = async (user: any, eventID: string) => {
 };
 
 const getUserData = async (user: any) => {
-  const userData = await Read.getUser(user);
+  const userData = await Read.getUserDoc(user);
   return userData;
+};
+
+const getUserProfile = async (user: any) => {
+  const userProfile = await Read.getUserProfile(user);
+  return userProfile;
 };
 
 const getAllEvents = async () => {
@@ -101,4 +106,5 @@ export {
   getUserData,
   getAllEvents,
   leaveEvent,
+  getUserProfile,
 };

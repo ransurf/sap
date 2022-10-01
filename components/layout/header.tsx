@@ -5,6 +5,7 @@ import { getUserData } from '../../back-end/functions';
 export default function Header(props: any) {
   const { user, loading } = useAuth();
   console.log("user info", user)
+  console.log("user id", user?.claims.user_id)
 
   return (
     //     <div className="navbar bg-base-100">

@@ -8,12 +8,18 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebaseConfig/init";
 
-const getUser = async (user: any) => {
-  const userRef = doc(db, `Users/${user.uid}`);
+const getUserDoc = async (user: any) => {
+  const userRef = doc(db, `Users/${user?.claims.user_id}`);
 
   const userSnapshot = await getDoc(userRef);
 
   return userSnapshot;
+};
+
+const getUserProfile = async (user: any) => {
+  const userProfile = user.claims;
+
+  return userProfile;
 };
 
 const getAggregatedData = async () => {
@@ -24,4 +30,4 @@ const getAggregatedData = async () => {
   return eventsSnapshot;
 };
 
-export { getUser, getAggregatedData };
+export { getUserDoc, getAggregatedData, getUserProfile };
