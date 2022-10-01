@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "firebase": "^9.0.2",
+    "firebase": "^9.10.0",
     "firebase-admin": "^9.11.1",
     "next": "^12.1.0",
     "nookies": "^2.5.2",
