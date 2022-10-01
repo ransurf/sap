@@ -79,19 +79,28 @@ export default function Header(props: any) {
         {/* <Link href="/dashboard">
         </Link> */}
         {/* <a className="btn btn-ghost normal-case text-xl">SAP</a> */}
-
         <div className="flex-1">
-          <div className="avatar w-8 rounded">
-            <Image src={logo}/>
+        {!user && !loading ? (
+            <div className="avatar w-8 rounded">
+              <Image src={logo}/>
+            </div>
+          )
+          :
+          (
+            <>
+            <div className="avatar w-8 rounded">
+              <Image src={logo}/>
+            </div>
+            <Link href="/dashboard">
+            <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
+            </Link>
+            <Link href="/events">
+            <a className="btn btn-ghost normal-case text-xl">Events</a>
+            </Link>
+            </>
+            
+          )}
           </div>
-          <Link href="/dashboard">
-          <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
-          </Link>
-          <Link href="/events">
-          <a className="btn btn-ghost normal-case text-xl">Events</a>
-        </Link>
-        </div>
-        
         
       </div>
       <div className="navbar-end">
@@ -101,9 +110,9 @@ export default function Header(props: any) {
 
           {!user && !loading ? (
             <>
-              <Link href="/signup">
+              {/* <Link href="/signup">
                 <button className="m-auto"> Signup</button>
-              </Link>
+              </Link> */}
 
               <Link href="/signin">
                 <button className="m-auto"> Signin</button>
@@ -115,7 +124,7 @@ export default function Header(props: any) {
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
-                    <img src={userProfile ? userProfile.picture : null} />
+                    <img src={userProfile? userProfile.picture : null} />
                   </div>
                 </label>
                 <ul
