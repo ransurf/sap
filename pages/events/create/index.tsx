@@ -54,7 +54,7 @@ const CreateEvent = (props: Props) => {
     {
       label: "Max Participants (leave empty for unlimited)",
       type: "number",
-      value: "maxParticipants",
+      value: "maxAttendees",
       details: {
         required: "Max participants is required",
       },
