@@ -32,7 +32,6 @@ const createUserInformation = async (
   bio: string,
   age: number,
   position: string,
-  contactInfo: string,
   location: string
 ) => {
   await Create.createUserInformation(
@@ -42,7 +41,6 @@ const createUserInformation = async (
     bio,
     age,
     position,
-    contactInfo,
     location
   );
 };
@@ -94,6 +92,28 @@ const getAllEvents = async () => {
   return allEvents;
 };
 
+const updateUserInfo = async (
+  user: any,
+  name: string,
+  profilePic: string,
+  bio: string,
+  age: number,
+  position: string,
+  location: string
+) => {
+  const updatedUserInfo = await Update.updateUserInfo(
+    user,
+    name,
+    profilePic,
+    bio,
+    age,
+    position,
+    location
+  );
+
+  return updatedUserInfo;
+};
+
 export {
   signUp,
   signUpGoogle,
@@ -107,4 +127,5 @@ export {
   getAllEvents,
   leaveEvent,
   getUserProfile,
+  updateUserInfo,
 };

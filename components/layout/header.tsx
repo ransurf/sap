@@ -29,6 +29,8 @@ export default function Header(props: any) {
     console.log("user data", userData)
   }, [user])
 
+  
+
   // console.log("user profile", userProfile)
   // console.log("user data", userData)
 

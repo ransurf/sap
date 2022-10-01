@@ -13,4 +13,21 @@ const leaveEvent = async (user: any, eventID: string) => {
   });
 };
 
-export { joinEvent, leaveEvent };
+const updateUserInfo = async (user: any,
+  name: string,
+  profilePic: string,
+  bio: string,
+  age: number,
+  position: string,
+  location: string) => {
+  await updateDoc(doc(db, `Users/${user?.claim.user_id}`), {
+    name: name ? name : null,
+    profilePic: profilePic ? profilePic : null,
+    bio: bio ? bio : null,
+    age: age ? age : null,
+    position: position ? position : null,
+    location: location ? location : null,
+  });
+};
+
+export { joinEvent, leaveEvent, updateUserInfo }; 
