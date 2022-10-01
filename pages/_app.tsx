@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return(
     <FirebaseProvider>
       <Layout> 
+        <html data-theme="corporate"></html>
         <Component {...pageProps} />
       </Layout>
     </FirebaseProvider>
