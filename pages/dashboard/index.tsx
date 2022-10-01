@@ -1,8 +1,12 @@
 import React from 'react'
-
+import Drawer from '../../components/Drawer'
 const dash = () => {
   return (
-    <div>dash</div>
+    <div>
+      <Drawer/>
+      dash
+    
+    </div>
   )
 }
 

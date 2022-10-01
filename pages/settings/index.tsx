@@ -1,6 +1,7 @@
 import * as React from "react";
 import Form from "../../components/Form";
 import { useForm } from "react-hook-form";
+import { updateUserInfo } from "../../back-end/userInfo";
 
 type FormValues = {
   [key: string]: any;
@@ -10,6 +11,7 @@ interface SelectInputsProps {
   label: string;
   value: string;
   options: SelectInput[];
+  details?: any;
 }
 
 interface TextInputsProps {
@@ -31,26 +33,55 @@ export default function Settings() {
     formState: { errors },
   } = useForm<FormValues>();
 
+  //   const showToast = () => {
+  //     return (
+  //       <div className="toast toast-end toast-middle">
+  //         <div className="alert alert-info">
+  //           <div>
+  //             <span>New mail arrived.</span>
+  //           </div>
+  //         </div>
+  //         <div className="alert alert-success">
+  //           <div>
+  //             <span>Message sent successfully.</span>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   };
+
   const mockTextInputs: TextInputsProps[] = [
     {
       label: "First Name",
       type: "text",
       value: "firstName",
+      details: {
+        required: "First name is required",
+      },
     },
     {
       label: "Last Name",
       type: "text",
       value: "lastName",
+      details: {
+        required: "Last name is required",
+      },
     },
     {
       label: "Age",
       type: "number",
       value: "age",
+      details: {
+        required: "Age is required",
+      },
     },
     {
-      label: "Are you human?",
-      type: "checkbox",
-      value: "human",
+      label: "Bio",
+      type: "textarea",
+      value: "bio",
+      details: {
+        required: "Bio is required",
+      },
     },
   ];
 
@@ -66,6 +97,9 @@ export default function Settings() {
         { label: "Vancouver", value: "Vancouver" },
         { label: "Waterloo", value: "Waterloo" },
       ],
+      details: {
+        required: "Location is required",
+      },
     },
     {
       label: "Position",
@@ -77,21 +111,27 @@ export default function Settings() {
         { label: "Sales and Marketing", value: "Sales and Marketing" },
         { label: "Other", value: "Other" },
       ],
+      details: {
+        required: "Position is required",
+      },
     },
   ];
 
   const onSubmit = (data: any, event: any) => {
     event.preventDefault();
-    console.log("submit", data);
+    console.log("uploadUserData", data);
   };
 
   return (
-    <Form
-      selectInputs={mockSelectInputs}
-      textInputs={mockTextInputs}
-      onSubmit={handleSubmit(onSubmit)}
-      register={register}
-      errors={errors}
-    />
+    <div className="page-container">
+      <h1 className="page-title">Settings</h1>
+      <Form
+        selectInputs={mockSelectInputs}
+        textInputs={mockTextInputs}
+        onSubmit={handleSubmit(onSubmit)}
+        register={register}
+        errors={errors}
+      />
+    </div>
   );
 }

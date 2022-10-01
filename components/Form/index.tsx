@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useForm } from "react-hook-form";
 
 type FormValues = {
   [key: string]: any;
@@ -8,7 +7,7 @@ type FormValues = {
 interface Props {
   selectInputs: SelectInputsProps[];
   textInputs: TextInputsProps[];
-  onSubmit: (data: FormValues) => void;
+  onSubmit: (...args: any) => void;
   register: any;
   errors: any;
   classNames?: string;
@@ -18,6 +17,7 @@ interface SelectInputsProps {
   label: string;
   value: string;
   options: SelectInput[];
+  details?: any;
 }
 
 interface TextInputsProps {
@@ -39,19 +39,29 @@ export default function Form(props: Props) {
   const generateTextInputFields = (mockTextInputs: TextInputsProps[]) => {
     return mockTextInputs.map((input, index) => {
       const { label, type, value, details: details = {} } = input;
+      console.log("details", details);
       return (
         <div className="flex flex-col w-full max-w-xs" key={value}>
-          <label className="" htmlFor={value}>
+          <label className="my-label-text" htmlFor={value}>
             {label}
           </label>
-
-          <input
-            {...register(value, details)}
-            id={value}
-            type={type}
-            className="input input-bordered w-full max-w-xs"
-          />
-          {errors[value] && <p>{errors[value]?.message}</p>}
+          {type === "textarea" ? (
+            <textarea
+              className="input input-bordered w-full max-w-xs"
+              id={value}
+              {...register(value, details)}
+            />
+          ) : (
+            <input
+              {...register(value, details)}
+              id={value}
+              type={type}
+              className="input input-bordered w-full max-w-xs"
+            />
+          )}
+          {errors[value] && (
+            <p className="text-red-500">{errors[value]?.message}</p>
+          )}
         </div>
       );
     });
@@ -59,16 +69,16 @@ export default function Form(props: Props) {
 
   const generateSelectFields = (selectInputs: SelectInputsProps[]) => {
     return selectInputs.map((input, index) => {
-      const { label, value, options } = input;
+      const { label, value, options, details } = input;
       return (
         <div className="flex flex-col w-full max-w-xs" key={value}>
           <label htmlFor={value}>
             {" "}
-            <span className="label-text">{label}</span>
+            <span className="my-label-text">{label}</span>
           </label>
           <select
-            {...register(value)}
-            id="gender"
+            {...register(value, details)}
+            id={value}
             className="select select-bordered w-full max-w-xs"
           >
             <option disabled selected>
@@ -80,6 +90,9 @@ export default function Form(props: Props) {
               </option>
             ))}
           </select>
+          {errors[value] && (
+            <p className="text-red-500">{errors[value]?.message}</p>
+          )}
         </div>
       );
     });
@@ -89,7 +102,7 @@ export default function Form(props: Props) {
     <form className="flex flex-col gap-4 form-control" onSubmit={onSubmit}>
       {generateTextInputFields(textInputs)}
       {generateSelectFields(selectInputs)}
-      <button type="submit">Submit</button>
+      <button className="btn btn-primary w-full max-w-xs" type="submit">Submit</button>
     </form>
   );
 }

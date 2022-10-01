@@ -6,6 +6,7 @@ import '../back-end/firebaseConfig/init'
 import analytics from '../utils/analytics'
 import { useEffect } from 'react'
 import onRouteChange from '@analytics/router-utils'
+import '../styles/global.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
 
