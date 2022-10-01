@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
 import {useState} from 'react'
 import { useAuth } from '../lib/authContext'
-
+import analytics from '../utils/analytics';
 const Home: NextPage = () => {
   const { user , loading} = useAuth()
   const [ email , setEmail ] =  useState<string>('')
@@ -56,7 +56,8 @@ const Home: NextPage = () => {
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
     });
-}
+    
+  }
 
   return (
     <>
