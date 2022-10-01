@@ -1,7 +1,8 @@
+import Link from "next/link";
 import React from "react";
 
 export interface EventDetails {
-  id: string;
+  eventId: string;
   title: string;
   description: string;
   tags: string[];
@@ -13,8 +14,8 @@ interface Props {
 }
 
 const EventCard = ({ event }: Props) => {
-  const { title, description, tags, date } = event;
-  console.log("event", event);
+  const { eventId, title, description, tags, date } = event;
+  console.log("event card", event);
   return (
     <div className="card w-96 bg-base-100 shadow-xl" key={title}>
       <figure>
@@ -34,6 +35,14 @@ const EventCard = ({ event }: Props) => {
           ))}
         </div>
       </div>
+      <button className="btn" onClick={() => console.log('view event')}> 
+        <Link href={{
+          pathname: '/EventInfo',
+          query: { id: eventId}
+        }}>
+            View Event
+        </Link>
+      </button>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { getUserData, getUserProfile } from '../../back-end/functions';
 import Image from 'next/image';
 import logo from '../../assets/logo.png'
 import Router from 'next/router';
-
+import analytics from '../../utils/analytics';
 
 export default function Header(props: any) {
   const { user, loading } = useAuth();
@@ -18,7 +18,7 @@ export default function Header(props: any) {
   useEffect(() => {
     if (user) {
       getUserProfile(user).then((data) => {
-        setUserProfile(data);
+        setUserProfile(data)
       })
 
       getUserData(user).then((data) => {
@@ -26,16 +26,10 @@ export default function Header(props: any) {
       })
 
     }
+    
     console.log("user profile", userProfile)
-    console.log("user data", userData)
   }, [user])
 
-  // console.log("user profile", userProfile)
-  // console.log("user data", userData)
-  const handleSignout = () => {
-    signOut()
-    Router.push('/')
-  }
   return (
     //     <div className="navbar bg-base-100">
     //       <div className="flex-1">

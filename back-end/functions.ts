@@ -16,68 +16,82 @@ interface UserInfo {
   location: string;
 }
 
+interface EventInfo {
+	user: any;
+	title: string;
+	image: string;
+	startDate: Timestamp;
+	endDate: Timestamp;
+	description: string;
+	location: string;
+	office: string;
+	host: string;
+	maxAttendees: number;
+	extraInfo: string;
+}
+
 const signUp = async (email: string, password: string) => {
-  const user = await Auth.signUpUser(email, password);
-  return user;
+	const user = await Auth.signUpUser(email, password);
+	return user;
 };
 
 const signUpGoogle = async () => {
-  const user = await Auth.signUpUserGoogle();
-  return user;
+	const user = await Auth.signUpUserGoogle();
+	return user;
 };
 
 const signInUser = async (email: string, password: string) => {
-  const user = await Auth.signInUser(email, password);
-  return user;
+	const user = await Auth.signInUser(email, password);
+	return user;
 };
 
 const createUserDocument = async (user: any) => {
-  const userDocument = await Create.createUserDocument(user);
-  return userDocument;
+	const userDocument = await Create.createUserDocument(user);
+	return userDocument;
 };
 
 const createUserInformation = async (
-  user: any,
-  name: string,
-  profilePic: string,
-  bio: string,
-  age: number,
-  position: string,
-  location: string
+	user: any,
+	name: string,
+	profilePic: string,
+	bio: string,
+	age: number,
+	position: string,
+	location: string
 ) => {
-  await Create.createUserInformation(
-    user,
-    name,
-    profilePic,
-    bio,
-    age,
-    position,
-    location
-  );
+	await Create.createUserInformation(
+		user,
+		name,
+		profilePic,
+		bio,
+		age,
+		position,
+		location
+	);
 };
 
-const createNewEvent = async (
-  user: any,
-  title: string,
-  image: string,
-  date: Timestamp,
-  description: string,
-  location: string,
-  host: string
-) => {
-  await Create.createNewEvent(
-    user,
-    title,
-    image,
-    date,
-    description,
-    location,
-    host
-  );
+const createNewEvent = async (eventInfo: EventInfo) => {
+	const { user, title, image, startDate, endDate, office, description, location, host, maxAttendees, extraInfo } = eventInfo;
+
+	const createEvent = await Create.createNewEvent(
+		user,
+		title,
+		image,
+		startDate,
+		endDate,
+		description,
+		location,
+		office,
+		host,
+		maxAttendees,
+		extraInfo
+	);
+
+	return createEvent;
 };
 
-const joinEvent = async (user: any, eventID: any) => {
-  await Update.joinEvent(user, eventID);
+const joinEvent = async (user: any, eventID: any, discordID: string) => {
+	await Update.joinEvent(user, eventID, discordID);
 };
 
 const leaveEvent = async (user: any, eventID: any) => {
@@ -99,12 +113,13 @@ const getUserProfile = async (user: any) => {
 };
 
 const getAllEvents = async () => {
-  const allEvents = await Read.getAggregatedData();
+  const allEvents = await Read.getAggregatedEvents();
   return allEvents;
 };
 
 const updateUserInfo = async (userInfo: UserInfo) => {
   const { user, firstName, lastName, profilePic, bio, age, position, location } = userInfo;
+
   const updatedUserInfo = await Update.updateUserInfo(
     user,
     firstName,
