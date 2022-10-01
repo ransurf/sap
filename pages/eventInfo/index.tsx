@@ -3,7 +3,7 @@ import React from 'react'
 
 type Props = {}
 
-const eventInfo = (props: Props) => {
+const EventInfo = (props: Props) => {
   const router = useRouter()
   return (
     <div className='page-container flex-row'>
@@ -13,4 +13,4 @@ const eventInfo = (props: Props) => {
   )
 }
 
-export default eventInfo
+export default EventInfo
