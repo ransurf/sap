@@ -1,7 +1,8 @@
 import { useAuth,signOut } from '../../back-end/authContext'
 import Link from 'next/link'
-import { getUserData } from '../../back-end/functions';
-
+import { getUserData } from '../../back-end/functions'
+import Image from 'next/image'
+import logo from '../../assets/logo.png'
 export default function Header(props: any) {
   const { user, loading } = useAuth();
   console.log("user info", user)
@@ -51,7 +52,14 @@ export default function Header(props: any) {
       <div className="navbar-start">
         {/* <Link href="/dashboard">
         </Link> */}
-        <a className="btn btn-ghost normal-case text-xl">SAP</a>
+        {/* <a className="btn btn-ghost normal-case text-xl">SAP</a> */}
+
+        <div className="avatar">
+        <div className="w-16 rounded">
+          <Image src={logo}/>
+        </div>
+        </div>
+        
         <Link href="/dashboard">
           <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
         </Link>
