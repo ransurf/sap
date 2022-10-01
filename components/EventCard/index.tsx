@@ -37,7 +37,7 @@ const EventCard = ({ event }: Props) => {
       </div>
       <button className="btn" onClick={() => console.log('view event')}> 
         <Link href={{
-          pathname: '/eventInfo',
+          pathname: '/EventInfo',
           query: { id: eventId}
         }}>
             View Event
