@@ -1,4 +1,4 @@
-import { useAuth,signOut } from '../../lib/authContext'
+import { useAuth,signOut } from '../../back-end/authContext'
 import Link from 'next/link'
 
 export default function Header(props : any){
