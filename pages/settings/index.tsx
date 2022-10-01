@@ -31,6 +31,23 @@ export default function Settings() {
     formState: { errors },
   } = useForm<FormValues>();
 
+  const showToast = () => {
+    return (
+      <div className="toast toast-end toast-middle">
+        <div className="alert alert-info">
+          <div>
+            <span>New mail arrived.</span>
+          </div>
+        </div>
+        <div className="alert alert-success">
+          <div>
+            <span>Message sent successfully.</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const mockTextInputs: TextInputsProps[] = [
     {
       label: "First Name",
@@ -46,11 +63,6 @@ export default function Settings() {
       label: "Age",
       type: "number",
       value: "age",
-    },
-    {
-      label: "Are you human?",
-      type: "checkbox",
-      value: "human",
     },
   ];
 
@@ -82,16 +94,19 @@ export default function Settings() {
 
   const onSubmit = (data: any, event: any) => {
     event.preventDefault();
-    console.log("submit", data);
+    console.log("uploadUserData", data);
   };
 
   return (
-    <Form
-      selectInputs={mockSelectInputs}
-      textInputs={mockTextInputs}
-      onSubmit={handleSubmit(onSubmit)}
-      register={register}
-      errors={errors}
-    />
+    <>
+      <Form
+        selectInputs={mockSelectInputs}
+        textInputs={mockTextInputs}
+        onSubmit={handleSubmit(onSubmit)}
+        register={register}
+        errors={errors}
+      />
+      {showToast()}
+    </>
   );
 }

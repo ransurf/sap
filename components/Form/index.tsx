@@ -8,7 +8,7 @@ type FormValues = {
 interface Props {
   selectInputs: SelectInputsProps[];
   textInputs: TextInputsProps[];
-  onSubmit: (data: FormValues) => void;
+  onSubmit: (...args: any) => void;
   register: any;
   errors: any;
   classNames?: string;
@@ -41,7 +41,7 @@ export default function Form(props: Props) {
       const { label, type, value, details: details = {} } = input;
       return (
         <div className="flex flex-col w-full max-w-xs" key={value}>
-          <label className="" htmlFor={value}>
+          <label className="label-text" htmlFor={value}>
             {label}
           </label>
 
