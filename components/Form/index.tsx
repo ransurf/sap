@@ -81,7 +81,7 @@ export default function Form(props: Props) {
             id={value}
             className="select select-bordered w-full max-w-xs"
           >
-            <option disabled selected>
+            <option disabled defaultValue={options[0].value}>
               Pick one
             </option>
             {options.map((option, index) => (

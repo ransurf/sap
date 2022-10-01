@@ -123,7 +123,11 @@ export default function Header(props: any) {
                   className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                    <a>Settings</a>
+                  <Link href="/settings">
+                      <a className="btn btn-ghost normal-case">
+                        Settings
+                      </a>
+                    </Link>
                   </li>
                   <li>
                     <a onClick={signOut}>Logout</a>

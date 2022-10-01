@@ -1,7 +1,8 @@
 import * as React from "react";
 import Form from "../../components/Form";
 import { useForm } from "react-hook-form";
-import { updateUserInfo } from "../../back-end/userInfo";
+import { updateUserInfo } from "../../back-end/functions";
+import { useAuth } from "../../back-end/authContext";
 
 type FormValues = {
   [key: string]: any;
@@ -27,6 +28,7 @@ interface SelectInput {
 }
 
 export default function Settings() {
+  const { user, loading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -119,7 +121,12 @@ export default function Settings() {
 
   const onSubmit = (data: any, event: any) => {
     event.preventDefault();
-    console.log("uploadUserData", data);
+    const newData = {
+        ...data,
+        user
+    }
+    console.log("uploadUserData", newData, user);
+    updateUserInfo(newData);
   };
 
   return (

@@ -11,7 +11,7 @@ import {
 
 const createUserDocument = async (user: any) => {
   await setDoc(
-    doc(db, `Users/${user?.claim?.user_id}`),
+    doc(db, `Users/${user.uid}`),
     {
       email: user.email,
     },

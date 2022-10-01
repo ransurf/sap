@@ -5,6 +5,17 @@ import * as Delete from "./firestore/delete";
 import * as Update from "./firestore/update";
 import * as Read from "./firestore/read";
 
+interface UserInfo {
+  user: any;
+  firstName: string;
+  lastName: string;
+  profilePic: string;
+  bio: string;
+  age: number;
+  position: string;
+  location: string;
+}
+
 const signUp = async (email: string, password: string) => {
   const user = await Auth.signUpUser(email, password);
   return user;
@@ -92,18 +103,12 @@ const getAllEvents = async () => {
   return allEvents;
 };
 
-const updateUserInfo = async (
-  user: any,
-  name: string,
-  profilePic: string,
-  bio: string,
-  age: number,
-  position: string,
-  location: string
-) => {
+const updateUserInfo = async (userInfo: UserInfo) => {
+  const { user, firstName, lastName, profilePic, bio, age, position, location } = userInfo;
   const updatedUserInfo = await Update.updateUserInfo(
     user,
-    name,
+    firstName,
+    lastName,
     profilePic,
     bio,
     age,
