@@ -1,20 +1,9 @@
-import React from "react";
-import EventCard from "../../components/EventCard/EventCard";
+import React from 'react'
 
-const Events = () => {
-  const events = [
-    {
-      title: "Event 1",
-      description: "This is a description",
-      tags: ["tag1", "tag2"],
-      date: "2021-10-10",
-    },
-  ];
+const events = () => {
   return (
-    <div>
-      <EventCard events={events} />
-    </div>
-  );
-};
+    <div>events</div>
+  )
+}
 
-export default Events;
+export default events

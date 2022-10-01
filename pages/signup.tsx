@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
 import {useState} from 'react'
-import { useAuth } from '../lib/authContext'
-import analytics from '../utils/analytics';
+import { useAuth } from '../back-end/authContext'
+import * as APIFirebase from '../back-end/functions'
+
 const Home: NextPage = () => {
   const { user , loading} = useAuth()
   const [ email , setEmail ] =  useState<string>('')
@@ -13,55 +13,28 @@ const Home: NextPage = () => {
 
   if(user) return <h1>U already logged</h1>
 
-
-  const auth = getAuth()
-
-  function createUserCredentials(){
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-      console.log('success', user)
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log('error', errorMessage)
-      window.alert(errorMessage)
-      // ..
-    });
+  const createUserCredentials = async () => {
+  const request = await APIFirebase.signUp(
+    email,
+    password,
+  );
+  if (!request) {
+    console.log("Signup Failed!");
+  } else {
+    console.log("Signup Successful!");
   }
+}
 
   
-  function loginWithGoogle(){
-    const googleProvider = new GoogleAuthProvider();
-
-    signInWithPopup(auth, googleProvider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      console.log('sign with google',user)
-      analytics.track('user-sign-up')
-      analytics.identify(`${user.uid}`, {
-        'name': user.displayName,
-        'email': user.email
-      })
-      // ...
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
-  }
+const loginWithGoogle = async () => {
+    const request = await APIFirebase.signUpGoogle(
+    );
+    if (!request) {
+      console.log("Signup With Google Failed!");
+    } else {
+      console.log("Signup With Google Successful!");
+    }
+}
 
   return (
     <>
@@ -76,7 +49,7 @@ const Home: NextPage = () => {
               <button onClick={createUserCredentials}>Signup</button>
           </div>
           <div>
-              <button onClick={()=>loginWithGoogle()}>Login with Google</button>
+              <button onClick={loginWithGoogle}>Login with Google</button>
           </div>
       </div>
     </>

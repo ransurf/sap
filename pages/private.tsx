@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useAuth } from '../lib/authContext'
+import { useAuth } from '../back-end/authContext'
 
 const Home: NextPage = () => {
   const { user, loading} = useAuth()

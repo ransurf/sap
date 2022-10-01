@@ -1,7 +1,7 @@
 import type { NextPage, GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { authServer } from '../lib/session'
-import type { TIdTokenResult } from '../lib/authContext'
+import { authServer } from '../back-end/session'
+import type { TIdTokenResult } from '../back-end/authContext'
 import React, { ReactNode } from 'react'
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

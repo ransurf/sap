@@ -1,4 +1,5 @@
 import Analytics from 'analytics'
+import segmentPlugin from '@analytics/segment'
 // import { senseiAnalytics } from '../src/analytics'
 
 // using David Wells Library - Write Key visible
@@ -7,6 +8,9 @@ const analytics = Analytics({
     plugins: [
         DebuggerPlugin({
             xyz: '123'
+        }),
+        segmentPlugin({
+          writeKey: 'jIk7r99BCGEIiB073gUqpW0Js3M7TlLp'
         })
     ]
 })
