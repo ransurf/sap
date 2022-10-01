@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@analytics/router-utils": "^0.1.1",
+    "analytics": "^0.8.1",
     "daisyui": "^2.31.0",
     "firebase": "^9.0.2",
     "firebase-admin": "^9.11.1",
@@ -19,7 +21,8 @@
     "react-daisyui": "^2.4.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.36.1",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "use-analytics": "^0.0.5"
   },
   "devDependencies": {
     "@types/react": "17.0.20",
