@@ -14,7 +14,7 @@ export default function Layout({ children }: Props) {
       <div>
         <Header />
       </div>
-      <div className="flex-grow w-full h-full">{children}</div>
+      <div className="flex flex-col w-full h-full">{children}</div>
       {/* <Footer /> */}
     </div>
   );

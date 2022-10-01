@@ -9,4 +9,7 @@
     .page-container {
         @apply flex flex-col p-8;
     }
+    .form-container {
+        @apply items-center;
+    }
   }
