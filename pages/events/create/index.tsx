@@ -7,6 +7,7 @@ import Form, {
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../back-end/authContext";
 import {LocationSelect, OfficeSelect, EventTypeSelect} from '../../../formData'
+import {createNewEvent} from '../../../back-end/functions'
 
 type Props = {};
 
@@ -78,10 +79,7 @@ const CreateEvent = (props: Props) => {
       user,
     };
     console.log("createEvent", newData, user);
-    //console log newData.startDate turned into a date object
-    //console log newData.endDate turned into a date object
-    console.log('startDate', new Date(newData.startDate));
-
+    createNewEvent(newData);
   };
 
   return (
