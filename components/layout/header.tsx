@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react'
 import { getUserData, getUserProfile } from '../../back-end/functions';
 import Image from 'next/image';
 import logo from '../../assets/logo.png'
+import Router from 'next/router';
 
 
 export default function Header(props: any) {
@@ -29,11 +30,12 @@ export default function Header(props: any) {
     console.log("user data", userData)
   }, [user])
 
-  
-
   // console.log("user profile", userProfile)
   // console.log("user data", userData)
-
+  const handleSignout = () => {
+    signOut()
+    Router.push('/')
+  }
   return (
     //     <div className="navbar bg-base-100">
     //       <div className="flex-1">
@@ -114,9 +116,9 @@ export default function Header(props: any) {
                 <button className="m-auto"> Signup</button>
               </Link> */}
 
-              <Link href="/signin">
+              {/* <Link href="/signin">
                 <button className="m-auto"> Signin</button>
-              </Link>
+              </Link> */}
             </>
           ) : null}
           {user ? (
@@ -136,10 +138,12 @@ export default function Header(props: any) {
                       <a className="btn btn-ghost normal-case">
                         Settings
                       </a>
-                    </Link>
+                  </Link>
                   </li>
                   <li>
-                    <a onClick={signOut}>Logout</a>
+                    <a className="btn btn-ghost normal-case" onClick={() => {
+                      signOut()
+                      Router.push('/')}}>Logout</a>
                   </li>
                 </ul>
               </div>
