@@ -45,6 +45,11 @@ const Home: NextPage = () => {
       // The signed-in user info.
       const user = result.user;
       console.log('sign with google',user)
+      analytics.track('user-sign-up')
+      analytics.identify(`${user.uid}`, {
+        'name': user.displayName,
+        'email': user.email
+      })
       // ...
     }).catch((error) => {
       // Handle Errors here.
@@ -56,7 +61,6 @@ const Home: NextPage = () => {
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
     });
-    
   }
 
   return (

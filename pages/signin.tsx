@@ -3,6 +3,8 @@ import Head from 'next/head'
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
 import {useState} from 'react'
 import { useAuth } from '../lib/authContext'
+import analytics from '../utils/analytics';
+
 
 const Home: NextPage = () => {
   const [ email , setEmail ] =  useState<string>('')
@@ -42,6 +44,12 @@ const Home: NextPage = () => {
         // The signed-in user info.
         const user = result.user;
         console.log('sign with google',user)
+
+        analytics.track('user-sign-in')
+        analytics.identify(`${user.uid}`, {
+          'name': user.displayName,
+          'email': user.email
+        })
         // ...
       }).catch((error) => {
         // Handle Errors here.
