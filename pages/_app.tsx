@@ -5,6 +5,7 @@ import FirebaseProvider from '../back-end/authContext'
 import '../back-end/firebaseConfig/init'
 import analytics from '../utils/analytics'
 import { useEffect } from 'react'
+/* eslint-disable */
 import onRouteChange from '@analytics/router-utils'
 import '../styles/global.css'
 

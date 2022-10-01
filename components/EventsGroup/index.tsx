@@ -15,7 +15,7 @@ const EventsGroup = (props: Props) => {
       <p className="text-md mb-2">{description}</p>
       {events.map((event, index) => {
         console.log("event", event);
-        return <EventCard event={event} key={index} />;
+        return <EventCard event={event} key={index}/>;
       })}
     </div>
   );
