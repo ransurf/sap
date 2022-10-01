@@ -22,13 +22,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [analytics])
   
   return(
-    <AnalyticsProvider instance = { analytics }>
     <FirebaseProvider>
       <Layout> 
+        <html data-theme="corporate"></html>
         <Component {...pageProps} />
       </Layout>
     </FirebaseProvider>
-    </AnalyticsProvider>
   )     
 }
 export default MyApp
