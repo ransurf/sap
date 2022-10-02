@@ -2,13 +2,12 @@ import Link from "next/link";
 import Router from "next/router";
 import React from "react";
 import moment from "moment";
-
 export interface EventDetails {
   id: string;
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: any;
+  endDate: any;
   maxParticipants: number;
   location: string;
   office: string;

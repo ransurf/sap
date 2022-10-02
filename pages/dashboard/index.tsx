@@ -29,7 +29,7 @@ const dash = () => {
     <div>
       <Drawer />
       <button onClick={onClick}>Get All Events</button>
-      <EventsGroup title="Events" description="" events={mockEventList} />
+      {/* <EventsGroup title="Events" description="" events={mockEventList} /> */}
     </div>
   );
 };
