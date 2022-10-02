@@ -29,7 +29,8 @@ const Profile = (props: Props) => {
           />
           <div className="flex flex-col gap-4">
             <h1 className="text-5xl font-bold ">{`${profile.firstName} ${profile.lastName}`}</h1>
-            <h2 className="page-subtitle badge badge-secondary p-4">
+            <p className="text-lg italic">{profile.bio}</p>
+            <h2 className="page-subtitle badge badge-secondary p-4 text-white">
               {profile.position} @ {profile.location}
             </h2>
             <h2>
@@ -41,13 +42,9 @@ const Profile = (props: Props) => {
               <span className="font-bold">Gender: </span>
               {profile.gender}
             </h2>
-            <h2>
-              <span className="font-bold">Bio: </span>
-              {profile.bio}
-            </h2>
             <p className="font-bold">
               Chat with me{" "}
-              <span className="text-secondary">{profile.email}</span>
+              <span className="text-secondary"><a className="link" href={`mailto:${profile.email}`}>{profile.email}</a></span>
             </p>
           </div>
         </div>

@@ -87,6 +87,9 @@ export default function Header(props: any) {
               <Link href="/events">
                 <a className="btn btn-ghost normal-case text-xl">Events</a>
               </Link>
+              <Link href="/profiles">
+                <a className="btn btn-ghost normal-case text-xl">Profiles</a>
+              </Link>
             </div>
           )}
         </div>
@@ -96,9 +99,7 @@ export default function Header(props: any) {
           // create a new event button}
           user && !loading ? (
             <Link href="/events/create">
-              <a className="btn btn-primary btn-sm normal-case text-xl">
-                Create Event
-              </a>
+              <a className="btn btn-primary btn-sm uppercase">Create Event</a>
             </Link>
           ) : (
             <></>
@@ -131,6 +132,11 @@ export default function Header(props: any) {
                   tabIndex={0}
                   className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                 >
+                  <li>
+                    <Link href={`/profile?id=${user.claims.user_id}`}>
+                      <a className="btn btn-ghost normal-case">My Profile</a>
+                    </Link>
+                  </li>
                   <li>
                     <Link href="/settings">
                       <a className="btn btn-ghost normal-case">Settings</a>
