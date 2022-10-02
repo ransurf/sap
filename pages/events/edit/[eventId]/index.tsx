@@ -3,28 +3,56 @@ import Form, {
   SelectInputsProps,
   TextInputsProps,
   FormValues,
-} from "../../../components/Form";
+} from "../../../../components/Form";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../back-end/authContext";
-import {LocationSelect, OfficeSelect, EventTypeSelect} from '../../../formData'
-import {createNewEvent} from '../../../back-end/functions'
+import { useAuth } from "../../../../back-end/authContext";
+import {
+  LocationSelect,
+  OfficeSelect,
+  EventTypeSelect,
+} from "../../../../formData";
+import { createNewEvent } from "../../../../back-end/functions";
 import Router from "next/router";
-import {useState} from 'react'
-import analytics from '../../../utils/analytics'
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { getEvent, updateEventInfo } from "../../../../back-end/functions";
+
 type Props = {};
 
-const CreateEvent = (props: Props) => {
-  const [encImg , setEncImg] = useState(null);
+const EditEvent = (props: Props) => {
+  const [encImg, setEncImg] = useState(null);
+  const [oldInfo, setOldInfo] = useState(null);
   const { user, loading } = useAuth();
-  const [file , setFile] = React.useState(null);
+  const router = useRouter();
+  const [file, setFile] = useState(null);
   const setImage = (img) => {
-    setEncImg(img)
-  }
+    setEncImg(img);
+  };
+
+  const getEventById = async (eventId: string) => {
+    const res = await getEvent(eventId);
+    console.log("res", res);
+    setOldInfo(res);
+  };
+
+  useEffect(() => {
+    const eventId = router.asPath.split("/")[3];
+    if (eventId) {
+      console.log("EventId", eventId);
+      getEventById(eventId);
+    }
+  }, [router.asPath]);
+
+  useEffect(() => {
+    console.log("oldInfo", oldInfo);
+  }, [oldInfo]);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    defaultValues: oldInfo ? oldInfo : {},
+  });
   const createEventInputFields = [
     {
       label: "Event Title",
@@ -73,7 +101,7 @@ const CreateEvent = (props: Props) => {
   const createEventSelectFields: SelectInputsProps[] = [
     LocationSelect,
     OfficeSelect,
-    EventTypeSelect
+    EventTypeSelect,
   ];
 
   const onSubmit = (data: any, event: any) => {
@@ -88,32 +116,26 @@ const CreateEvent = (props: Props) => {
       ...formattedData,
       user,
     };
-    analytics.track('event-created',{
-      'eventType': newData.eventType,
-      'location': newData.location,
-      'office': newData.office,
-      'description': newData.description,
-      'title': newData.title
-    })
     console.log("createEvent", newData, user);
-    createNewEvent(newData);
-    Router.push('/dashboard')
+    updateEventInfo(newData);
+    Router.push("/events");
   };
 
   return (
     <div className="page-container form-container">
-      <h1 className="page-title">Create Event</h1>
-      
+      <h1 className="page-title">Update Event</h1>
+
       <Form
         textInputs={createEventInputFields}
         selectInputs={createEventSelectFields}
         onSubmit={handleSubmit(onSubmit)}
-        file = {setImage}
+        file={setImage}
         register={register}
+        // defaultValues={oldInfo}
         errors={errors}
-      />     
+      />
     </div>
   );
 };
 
-export default CreateEvent;
+export default EditEvent;

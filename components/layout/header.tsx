@@ -148,6 +148,11 @@ export default function Header(props: any) {
                     </Link>
                   </li>
                   <li>
+                    <Link href="/plugins">
+                      <a className="btn btn-ghost normal-case">plugins</a>
+                    </Link>
+                  </li>
+                  <li>
                     <a
                       className="btn btn-ghost normal-case"
                       onClick={() => {

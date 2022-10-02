@@ -9,6 +9,7 @@ import { updateUserInfo } from "../../back-end/functions";
 import { useAuth } from "../../back-end/authContext";
 import { OfficeSelect, PositionSelect } from "../../formData";
 import { toast } from "react-toastify";
+import analytics from "../../utils/analytics";
 
 export default function Settings() {
   const { user, loading } = useAuth();
@@ -105,6 +106,16 @@ export default function Settings() {
       "profilePic": user?.claims.picture,
     };
     console.log("uploadUserData", newData, user);
+    
+    analytics.identify(user?.claims.user_id,{
+      'firstName': newData.firstName,
+      'lastName': newData.lastName,
+      'gender' : newData.gender,
+      'bio': newData.bio,
+      'age': newData.age
+    })
+    analytics.track('profile-updated')
+    
     updateUserInfo(newData)
       .then((res) => {
         console.log("res", res);

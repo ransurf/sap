@@ -186,56 +186,54 @@ const updateUserInfo = async (userInfo: UserInfo) => {
 };
 
 const updateEventInfo = async (eventInfo: EventInfo) => {
-	const {
-		user,
-		title,
-		image,
-		startDate,
-		endDate,
-		eventType,
-		office,
-		description,
-		location,
-		host,
-		maxAttendees,
-		extraInfo,
-	} = eventInfo;
-
-	const updatedEventInfo = await Update.updateEventInfo({
-		user,
-		title,
-		image,
-		startDate,
-		endDate,
-		eventType,
-		office,
-		description,
-		location,
-		host,
-		maxAttendees,
-		extraInfo,
-	});
-
-	return updatedEventInfo;
+  const {
+    user,
+    title,
+    image,
+    startDate,
+    endDate,
+    eventType,
+    office,
+    description,
+    location,
+    host,
+    maxAttendees,
+    extraInfo,
+  } = eventInfo;
+  const updatedEventInfo = await Update.updateEventInfo({
+    user,
+    title,
+    image,
+    startDate,
+    endDate,
+    description,
+    eventType,
+    location,
+    office,
+    host,
+    maxAttendees,
+    extraInfo,
+  });
+  return updatedEventInfo;
 };
 
 export {
-	signUp,
-	signUpGoogle,
-	signInUser,
-	createUserDocument,
-	createUserInformation,
-	createNewEvent,
-	joinEvent,
-	deleteEvent,
-	getUserData,
-	getUserDataById,
-	getAllEvents,
-	getAllUsers,
-	leaveEvent,
-	getUserProfile,
-	updateUserInfo,
-	getUsersFromEvent,
-	getEvent,
-	updateEventInfo,
+  signUp,
+  signUpGoogle,
+  signInUser,
+  createUserDocument,
+  createUserInformation,
+  createNewEvent,
+  joinEvent,
+  deleteEvent,
+  getUserData,
+  getUserDataById,
+  getAllEvents,
+  getAllUsers,
+  leaveEvent,
+  getUserProfile,
+  updateUserInfo,
+  updateEventInfo,
+  getUsersFromEvent,
+  getEvent,
 };
