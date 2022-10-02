@@ -176,6 +176,10 @@ const EventInfo = (props: Props) => {
                 {event.location || 'N/A'}{" "}
                 {event.location !== "Online" ? `\@ ${event.office}` : ""}
               </div>
+              <div className="font-bold">Event Type</div>
+              <div className="text-sm text-secondary font-bold">
+                {event.eventType || "N/A"}
+              </div>
             </div>
           </div>
         </div>
