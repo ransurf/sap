@@ -17,12 +17,13 @@ interface UserInfo {
 	gender: string;
 }
 
-interface EventInfo {
+export interface EventInfo {
 	user: any;
 	title: string;
 	image: string;
 	startDate: Timestamp;
 	endDate: Timestamp;
+	eventType: string;
 	description: string;
 	location: string;
 	office: string;
@@ -79,6 +80,7 @@ const createNewEvent = async (eventInfo: EventInfo) => {
 		image,
 		startDate,
 		endDate,
+		eventType,
 		office,
 		description,
 		location,
@@ -89,18 +91,20 @@ const createNewEvent = async (eventInfo: EventInfo) => {
 
 	console.log("createNewEvent", eventInfo);
 
-	const createEvent = await Create.createNewEvent(
+	const createEvent = await Create.createNewEvent({
 		user,
 		title,
 		image,
 		startDate,
 		endDate,
 		description,
+		eventType,
 		location,
 		office,
 		host,
 		maxAttendees,
 		extraInfo
+	}
 	);
 
 	return createEvent;
