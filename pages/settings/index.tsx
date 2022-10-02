@@ -108,7 +108,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="page-container forms-container">
+    <div className="page-container form-container">
       <h1 className="page-title">Settings</h1>
       <Form
         selectInputs={mockSelectInputs}
