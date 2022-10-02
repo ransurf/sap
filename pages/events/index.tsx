@@ -32,6 +32,7 @@ const Events = () => {
   useEffect(() => { console.log("all events", eventList) }, [eventList])
   
   useEffect(()=>{console.log(filter, 'set')},[filter])
+  
   return (
     <div className="page-container flex-row">
       <Drawer setFilter = {setEventFilter} filters={filterValues}/>
