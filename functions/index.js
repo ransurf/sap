@@ -4,6 +4,7 @@ const calendar = google.calendar("v3");
 const functions = require("firebase-functions");
 
 const googleCredentials = require("./credentials.json");
+const { event } = require("firebase-functions/v1/analytics");
 
 const ERROR_MESSAGE = {
 	status: "500",
@@ -12,72 +13,118 @@ const ERROR_MESSAGE = {
 
 const TIME_ZONE = "PST";
 
-function addEvent(event, auth) {
+function addEvent(eventInfo, auth) {
+	console.log("Before calendar insert");
 	return new Promise(function (resolve, reject) {
-		calendar.events.insert(
-			{
-				auth: auth,
-				calendarId: "primary",
-				resource: {
-					summary: event.eventName,
-					description: event.description,
-					start: {
-						dateTime: event.startDate,
-						timeZone: TIME_ZONE,
-					},
-					end: {
-						dateTime: event.endDate,
-						timeZone: TIME_ZONE,
-					},
+		// console.log("#################Calling Calendar")
+		// calendar.events.insert(
+		// 	{
+		// 		auth: auth,
+		// 		calendarId: "primary",
+		// 		resource: {
+		// 			summary: event.eventName,
+		// 			description: event.description,
+		// 			start: {
+		// 				date: event.startDate,
+		// 				timeZone: TIME_ZONE,
+		// 			},
+		// 			end: {
+		// 				date: event.endDate,
+		// 				timeZone: TIME_ZONE,
+		// 			},
 
-					location: event.location,
-				},
+		// 			location: event.location,
+		// 		},
+		// 	},
+
+		// 	(err, res) => {
+		// 		if (err) {
+		// 			console.log("Rejecting because of error: " + err);
+		// 			reject(err);
+		// 		} else {
+		// 			console.log("Request successful");
+		// 			resolve(res.data);
+		// 		}
+		// 	}
+		// );
+
+		const event = {
+			summary: eventInfo.eventName,
+			location: eventInfo.location,
+			description: eventInfo.description,
+			start: {
+				dateTime: eventInfo.startDate,
+				// timeZone: "America/Los_Angeles",
+			},
+			end: {
+				dateTime: eventInfo.endDate,
+				// timeZone: "America/Los_Angeles",
+			},
+		};
+
+		const request = calendar.events.insert(
+			{
+				calendarId: "primary",
+				auth: auth,
+				resource: event,
 			},
 			(err, res) => {
 				if (err) {
-					console.log("Rejecting because of error");
+					console.log("Rejecting because of error: " + err);
 					reject(err);
+				} else {
+					console.log("Request successful");
+					resolve(res.data);
 				}
-				console.log("Request successful");
-				resolve(res.data);
 			}
 		);
+
+		// request.execute(function (event) {
+		// 	appendPre("Event created: " + event.htmlLink);
+		// });
 	});
 }
 
-const cors = require("cors")({ origin: true });
-
 exports.addEventToCalendar = functions.https.onRequest((request, response) => {
-	cors(request, response, () => {
-		const eventData = {
-			eventName: request.body.eventName,
-			description: request.body.description,
-			startTime: request.body.startTime,
-			endTime: request.body.endTime,
-			location: request.body.location,
-		};
+	// console.log("request", request.body);
 
-		const oAuth2Client = new OAuth2(
-			googleCredentials.web.client_id,
-			googleCredentials.web.client_secret,
-			googleCredentials.web.redirect_uris[0]
-		);
+	const parsedData = JSON.parse(request.body);
 
-		oAuth2Client.setCredentials({
-			refresh_token: googleCredentials.refresh_token,
-		});
+	const eventData = {
+		eventName: parsedData.eventName,
+		description: parsedData.description,
+		startDate: parsedData.startDate,
+		endDate: parsedData.endDate,
+		location: parsedData.location,
+	};
 
-		addEvent(eventData, oAuth2Client)
-			.then((data) => {
-				response.status(200).send(data);
-				return;
-			})
-			.catch((err) => {
-				console.error("Error adding event: " + err.message);
-				response.status(500).send(ERROR_RESPONSE);
-				return;
-			});
+	const OAuth2Client = new OAuth2(
+		googleCredentials.web.client_id,
+		googleCredentials.web.client_secret,
+		googleCredentials.web.redirect_uris[0]
+	);
+
+	OAuth2Client.setCredentials({
+		refresh_token: googleCredentials.refresh_token,
 	});
+
+	console.log("*******************eventData", eventData);
+	console.log(
+		"*******************refresh_token",
+		googleCredentials.refresh_token
+	);
+
+	addEvent(eventData, OAuth2Client)
+		.then((data) => {
+			console.log("data", data);
+			response.status(200).send(data);
+			return;
+		})
+		.catch((err) => {
+			console.error("Error adding event: " + err.message);
+			response.status(500).send(err);
+			return;
+		});
 });
 
 // // Create and Deploy Your First Cloud Functions

@@ -22,8 +22,8 @@ export interface EventInfo {
   user: any;
   title: string;
   image: string;
-  startDate: Timestamp;
-  endDate: Timestamp;
+  startDate: Date;
+  endDate: Date;
   eventType: string;
   description: string;
   location: string;
@@ -185,22 +185,57 @@ const updateUserInfo = async (userInfo: UserInfo) => {
   return updatedUserInfo;
 };
 
+const updateEventInfo = async (eventInfo: EventInfo) => {
+	const {
+		user,
+		title,
+		image,
+		startDate,
+		endDate,
+		eventType,
+		office,
+		description,
+		location,
+		host,
+		maxAttendees,
+		extraInfo,
+	} = eventInfo;
+
+	const updatedEventInfo = await Update.updateEventInfo({
+		user,
+		title,
+		image,
+		startDate,
+		endDate,
+		eventType,
+		office,
+		description,
+		location,
+		host,
+		maxAttendees,
+		extraInfo,
+	});
+
+	return updatedEventInfo;
+};
+
 export {
-  signUp,
-  signUpGoogle,
-  signInUser,
-  createUserDocument,
-  createUserInformation,
-  createNewEvent,
-  joinEvent,
-  deleteEvent,
-  getUserData,
-  getUserDataById,
-  getAllEvents,
-  getAllUsers,
-  leaveEvent,
-  getUserProfile,
-  updateUserInfo,
-  getUsersFromEvent,
-  getEvent,
+	signUp,
+	signUpGoogle,
+	signInUser,
+	createUserDocument,
+	createUserInformation,
+	createNewEvent,
+	joinEvent,
+	deleteEvent,
+	getUserData,
+	getUserDataById,
+	getAllEvents,
+	getAllUsers,
+	leaveEvent,
+	getUserProfile,
+	updateUserInfo,
+	getUsersFromEvent,
+	getEvent,
+	updateEventInfo,
 };

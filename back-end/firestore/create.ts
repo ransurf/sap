@@ -92,26 +92,31 @@ const createNewEvent = async ({
 	//create json object and add eventinfo to it
 	const eventInfo = {
 		eventName: title,
-		startDate: startDate,
-		endDate: endDate,
+		startDate: startDate.toISOString(),
+		endDate: endDate.toISOString(),
 		description: description,
 		location: location,
 	};
 
 	console.log("eventInfo: ", eventInfo);
 	console.log("eventinfo json", JSON.stringify(eventInfo));
+	console.log("Startdate: ", startDate);
 
 	let returnedData = fetch(
 		"https://us-central1-saphack2022.cloudfunctions.net/addEventToCalendar",
 		{
 			method: "POST",
-			headers: { "Content-Type": "application/json",  },
+			mode: "no-cors",
+			headers: {
+				"Content-Type": "application/json",
+				"Acess-Control-Allow-Origin": "http://localhost:3000/",
+			},
+
 			body: JSON.stringify(eventInfo),
 		}
 	);
 
 	console.log("returnedData: ", returnedData);
-	
 };
 
 export { createUserDocument, createUserInformation, createNewEvent };
