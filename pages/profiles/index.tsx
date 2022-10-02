@@ -10,7 +10,7 @@ const Profiles = (props: Props) => {
     const fetchedUsers = await getAllUsers();
     console.log('fetchedUsers', fetchedUsers)
     setUsers(fetchedUsers);
-    console.log("users", fetchedUsers);
+    console.log("users PROFILES", fetchedUsers);
   };
 
   useEffect(() => {

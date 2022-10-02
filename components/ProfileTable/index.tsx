@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Router from "next/router";
-import { getAllUsers, getUserData } from "../../back-end/functions";
+import { getAllUsers, getUserDataById } from "../../back-end/functions";
 import Image from "next/image";
 
 type Props = {
@@ -8,10 +8,46 @@ type Props = {
 };
 
 const ProfileTable = ({ profiles: participants }: Props) => {
-  const renderParticipants = useMemo(() => {
-    console.log("memo renderParticipants", participants);
+  const [profiles, setProfiles] = useState<any>([]);
+  const [changedProfiles, setChangedProfiles] = useState<boolean>(false);
 
-    return participants?.map((participant: any, index: number) => {
+  const setNewProfiles = async () => {
+    console.log("PROFILES participants", participants);
+    let tempProfiles: any[] = [];
+    if (participants[0]?.uid) {
+      participants?.forEach(async (user: any) => {
+        const userData = await getUserDataById(user.uid);
+        console.log("PROFILES userData", userData);
+        tempProfiles.push(userData);
+      });
+      if (profiles && !changedProfiles) {
+        setProfiles(tempProfiles);
+        setChangedProfiles(true);
+      }
+      console.log("PROFILES tempProfiles", tempProfiles);
+    }
+  };
+
+  useEffect(() => {
+    console.log("PROFILES prodfiles changed to", profiles), [profiles];
+  }, [profiles]);
+
+  useEffect(() => {
+    if (!participants[0]?.uid && !changedProfiles) {
+      setProfiles(participants);
+      setChangedProfiles(true);
+    }
+    setNewProfiles();
+  }, []);
+
+  // useEffect(() => {
+  //   setNewProfiles();
+  // }, [participants]);
+
+  const renderParticipants = useMemo(() => {
+    console.log("memo renderParticipants", participants, profiles);
+
+    return profiles?.map((participant: any, index: number) => {
       const {
         id,
         firstName,
@@ -73,7 +109,7 @@ const ProfileTable = ({ profiles: participants }: Props) => {
         </tr>
       );
     });
-  }, [participants]);
+  }, [participants, profiles]);
 
   return (
     <div className="overflow-x-auto w-full">
