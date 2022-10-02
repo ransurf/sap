@@ -9,11 +9,12 @@ import { EventDetails } from "../../components/EventCard";
 import Image from "next/image";
 import moment from "moment";
 import { useAuth } from "../../back-end/authContext";
+// import Modal from "react-daisyui";
 
 type Props = {};
 
 const EventInfo = (props: Props) => {
-  const {user, loading} = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const [event, setEvent] = useState<any>();
   const [participants, setParticipants] = useState<any>([]);
@@ -39,7 +40,7 @@ const EventInfo = (props: Props) => {
 
   const onJoinEvent = () => {
     console.log("join event");
-    joinEvent(user, event.id, '');
+    joinEvent(user, event.id, "");
   };
 
   const renderParticipants = useMemo(() => {
@@ -80,6 +81,15 @@ const EventInfo = (props: Props) => {
 
   return event ? (
     <div className="page-container gap-4">
+      {/* <Modal open={true}>
+        <div className="modal-content">
+          <div className="modal-header">
+            <div className="modal-title h5">Event Details</div>
+            <div className="modal-close"></div>
+          </div>
+          <div className="modal-body">akldjslk</div>
+        </div>
+      </Modal> */}
       <div className="flex flex-col items-center">
         <h1 className="page-title">{event.title}</h1>
         <p>{event.description}</p>
@@ -89,7 +99,10 @@ const EventInfo = (props: Props) => {
             {event.maxParticipants > 0 ? `/${event.maxParticipants}` : ""}{" "}
             Participant(s)
           </p>
-          <button className="btn btn-sm btn-primary" onClick={() => onJoinEvent()}>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => onJoinEvent()}
+          >
             Join Event
           </button>
         </div>

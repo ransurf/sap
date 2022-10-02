@@ -8,8 +8,8 @@ export interface EventDetails {
   id: string;
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: any;
+  endDate: any;
   maxParticipants: number;
   location: string;
   office: string;
