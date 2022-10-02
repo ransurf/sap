@@ -7,7 +7,7 @@ const Dashboard = () => {
   const { user, loading } = useAuth();
   const [eventList, setEventList] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState("Joined Events");
   const [desc, setDesc] = useState("");
   const filterValues = ["My Events", "Joined Events"];
   const setEventFilter = (value) => {
@@ -25,10 +25,6 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    console.log("all events", eventList);
-  }, [eventList]);
-
-  useEffect(() => {
     console.log(filter, "filter set");
     if (filter == filterValues[0]) {
       setEventList(
@@ -36,25 +32,25 @@ const Dashboard = () => {
       );
       setDesc("All upcoming events you are hosting");
     } else if (filter == filterValues[1]) {
+      console.log(allEvents);
       setEventList(
-        allEvents.filter((event) =>
-          Array.from(event.participants).includes(user.claims.user_id)
-        )
+        allEvents.filter((event) => {
+          console.log("event.participants", event.participants);
+          return event.participants.find((p) => p.uid === user.claims.user_id);
+        })
       );
-      setDesc("All upcoming events you joined or are hosting");
-    } else {
-      setEventList(allEvents);
+      setDesc("All the events that you are a part of");
     }
   }, [filter]);
 
   return (
     <div className="page-container flex-row gap-8">
-      <Drawer setFilter={setEventFilter} filters={filterValues} />
+      <Drawer setFilter={setEventFilter} filters={filterValues} reset={false} />
       <div>
         {eventList ? (
           <EventsGroup
             title={filter ? filter : "Dashboard"}
-            modifyEvents={filter === 'My Events'}
+            modifyEvents={filter === "My Events"}
             description={desc}
             events={eventList}
           />
