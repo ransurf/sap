@@ -8,8 +8,8 @@ type Props = {}
 const EventInfo = (props: Props) => {
   const [event, setEvent] = useState(undefined)
   const eventQuery = async () => {
-    const events = await getEvent(`${router.query.id}`)
-    setEvent(event)
+    const res = await getEvent(`${router.query.id}`)
+    setEvent(res)
   }
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const EventInfo = (props: Props) => {
   }, [])
   
   useEffect(() => {
-    console.log("all events", event)
+    console.log("current event", event)
   }, [event])
 
   const router = useRouter()
@@ -26,7 +26,10 @@ const EventInfo = (props: Props) => {
 
   return (
     <div className='page-container flex-row'>
-      Hello, {router.query.id}
+
+      <div>
+        {JSON.stringify(event)}
+      </div>
       
     </div>
   )
