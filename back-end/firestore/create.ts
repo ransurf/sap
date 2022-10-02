@@ -15,6 +15,7 @@ const createUserDocument = async (user: any) => {
 		doc(db, `Users/${user.uid}`),
 		{
 			email: user.email,
+			profilePic: user?.claims.picture,
 		},
 		{ merge: true }
 	);
@@ -33,7 +34,6 @@ const createUserInformation = async (
 		doc(db, `Users/${user?.claims.user_id}`),
 		{
 			name: name,
-			profilePic: user?.claims.picture,
 			bio: bio,
 			age: age,
 			position: position,
@@ -100,7 +100,7 @@ const createNewEvent = async ({
 	console.log("eventInfo: ", eventInfo);
 	console.log("eventinfo json", JSON.stringify(eventInfo));
 
-	fetch(
+	let returnedData = fetch(
 		"https://us-central1-saphack2022.cloudfunctions.net/addEventToCalendar",
 		{
 			method: "POST",
