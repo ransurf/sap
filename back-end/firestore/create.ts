@@ -26,7 +26,8 @@ const createUserInformation = async (
 	bio: string,
 	age: number,
 	position: string,
-	location: string
+	location: string,
+	gender: string,
 ) => {
 	await setDoc(
 		doc(db, `Users/${user?.claims.user_id}`),
@@ -37,6 +38,7 @@ const createUserInformation = async (
 			age: age,
 			position: position,
 			location: location,
+			gender: gender,
 		},
 		{ merge: true }
 	);

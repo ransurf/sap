@@ -6,14 +6,15 @@ import * as Update from "./firestore/update";
 import * as Read from "./firestore/read";
 
 interface UserInfo {
-  user: any;
-  firstName: string;
-  lastName: string;
-  profilePic: string;
-  bio: string;
-  age: number;
-  position: string;
-  location: string;
+	user: any;
+	firstName: string;
+	lastName: string;
+	profilePic: string;
+	bio: string;
+	age: number;
+	position: string;
+	location: string;
+	gender: string;
 }
 
 interface EventInfo {
@@ -57,7 +58,8 @@ const createUserInformation = async (
 	bio: string,
 	age: number,
 	position: string,
-	location: string
+	location: string,
+	gender: string
 ) => {
 	await Create.createUserInformation(
 		user,
@@ -66,7 +68,8 @@ const createUserInformation = async (
 		bio,
 		age,
 		position,
-		location
+		location,
+		gender
 	);
 };
 
@@ -102,33 +105,33 @@ const createNewEvent = async (eventInfo: EventInfo) => {
 	);
 
 	return createEvent;
-};;
+};
 
 const joinEvent = async (user: any, eventID: any, extraInfo: string) => {
 	await Update.joinEvent(user, eventID, extraInfo);
 };
 
 const leaveEvent = async (user: any, eventID: any) => {
-  await Update.leaveEvent(user, eventID);
+	await Update.leaveEvent(user, eventID);
 };
 
 const deleteEvent = async (user: any, eventID: string) => {
-  await Delete.deleteEvent(user, eventID);
+	await Delete.deleteEvent(user, eventID);
 };
 
 const getUserData = async (user: any) => {
-  const userData = await Read.getUserDoc(user);
-  return userData;
+	const userData = await Read.getUserDoc(user);
+	return userData;
 };
 
 const getUserProfile = async (user: any) => {
-  const userProfile = await Read.getUserProfile(user);
-  return userProfile;
+	const userProfile = await Read.getUserProfile(user);
+	return userProfile;
 };
 
 const getAllEvents = async () => {
-  const allEvents = await Read.getAggregatedEvents();
-  return allEvents;
+	const allEvents = await Read.getAggregatedEvents();
+	return allEvents;
 };
 
 const getUsersFromEvent = async (eventID: string) => {
@@ -151,6 +154,7 @@ const updateUserInfo = async (userInfo: UserInfo) => {
 		age,
 		position,
 		location,
+		gender,
 	} = userInfo;
 
 	const updatedUserInfo = await Update.updateUserInfo(
@@ -161,7 +165,8 @@ const updateUserInfo = async (userInfo: UserInfo) => {
 		bio,
 		age,
 		position,
-		location
+		location,
+		gender
 	);
 
 	return updatedUserInfo;

@@ -19,23 +19,27 @@ const leaveEvent = async (user: any, eventID: string) => {
   });
 };
 
-const updateUserInfo = async (user: any,
-  firstName: string,
-  lastName: string,
-  profilePic: string,
-  bio: string,
-  age: number,
-  position: string,
-  location: string) => {
-  await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
-    firstName: firstName ? firstName : null,
-    lastName: lastName ? lastName : null,
-    profilePic: profilePic ? profilePic : null,
-    bio: bio ? bio : null,
-    age: age ? age : null,
-    position: position ? position : null,
-    location: location ? location : null,
-  });
+const updateUserInfo = async (
+	user: any,
+	firstName: string,
+	lastName: string,
+	profilePic: string,
+	bio: string,
+	age: number,
+	position: string,
+	location: string,
+	gender: string
+) => {
+	await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
+		firstName: firstName ? firstName : null,
+		lastName: lastName ? lastName : null,
+		profilePic: profilePic ? profilePic : null,
+		bio: bio ? bio : null,
+		age: age ? age : null,
+		position: position ? position : null,
+		location: location ? location : null,
+		gender: gender ? gender : null,
+	});
 };
 
 export { joinEvent, leaveEvent, updateUserInfo }; 
