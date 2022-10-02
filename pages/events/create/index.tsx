@@ -9,12 +9,15 @@ import { useAuth } from "../../../back-end/authContext";
 import {LocationSelect, OfficeSelect, EventTypeSelect} from '../../../formData'
 import {createNewEvent} from '../../../back-end/functions'
 import Router from "next/router";
-import { base64Encode } from "@firebase/util";
+import {useState} from 'react'
 
 type Props = {};
 
 const CreateEvent = (props: Props) => {
+  const [encImg , setEncImg] = useState(null);
   const { user, loading } = useAuth();
+  const [file , setFile] = React.useState(null);
+
   const {
     register,
     handleSubmit,
@@ -75,7 +78,7 @@ const CreateEvent = (props: Props) => {
     event.preventDefault();
     const formattedData = {
       ...data,
-      image: base64Encode(`${data.image}`),
+      image: encImg,
       startDate: new Date(data.startDate),
       endDate: new Date(data.endDate),
     };
@@ -91,13 +94,15 @@ const CreateEvent = (props: Props) => {
   return (
     <div className="page-container form-container">
       <h1 className="page-title">Create Event</h1>
+      
       <Form
         textInputs={createEventInputFields}
         selectInputs={createEventSelectFields}
         onSubmit={handleSubmit(onSubmit)}
+        file = {setEncImg}
         register={register}
         errors={errors}
-      />
+      />     
     </div>
   );
 };

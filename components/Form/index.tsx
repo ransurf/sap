@@ -1,4 +1,5 @@
 import * as React from "react";
+import FileBase from 'react-file-base64';
 
 export interface FormValues {
   [key: string]: any;
@@ -11,6 +12,7 @@ interface Props {
   register: any;
   errors: any;
   classNames?: string;
+  file: (...args: any) => void;
 }
 
 export interface SelectInputsProps {
@@ -34,7 +36,7 @@ export interface SelectInput {
 }
 
 export default function Form(props: Props) {
-  const { selectInputs, textInputs, onSubmit, register, errors, classNames } =
+  const { selectInputs, textInputs, onSubmit, register, errors, file} =
     props;
 
   const generateTextInputFields = (mockTextInputs: TextInputsProps[]) => {
@@ -104,6 +106,7 @@ export default function Form(props: Props) {
     <form className="flex flex-col gap-4 form-control" onSubmit={onSubmit}>
       {textInputs && generateTextInputFields(textInputs)}
       {selectInputs && generateSelectFields(selectInputs)}
+      <FileBase multiple={false} onDone={({base64}) => { file(base64); }}/>
       <button className="btn btn-primary w-full max-w-sm" type="submit">Submit</button>
     </form>
   );

@@ -18,7 +18,6 @@ export interface EventDetails {
 interface Props {
   event: EventDetails;
 }
-
 const EventCard = ({ event }: Props) => {
   const { id, title, description, startDate, location, office, eventType} = event;
   const tags = [eventType]
@@ -26,7 +25,8 @@ const EventCard = ({ event }: Props) => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl" key={title}>
       <figure>
-        <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+        <img src={"https://placeimg.com/400/225/arch"} alt="Shoes" />
+        {/* <Image src={`${base64Decode(image)}`} alt="Shoes" /> */}
       </figure>
       <div className="card-body">
         <h2 className="card-title justify-between">

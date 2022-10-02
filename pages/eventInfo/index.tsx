@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { getEvent } from '../../back-end/functions'
-
+import Image from 'next/image';
 type Props = {}
 
 
 const EventInfo = (props: Props) => {
   const [event, setEvent] = useState(undefined)
+  const [ img, setImg] = useState(undefined)
   const eventQuery = async () => {
     const res = await getEvent(`${router.query.id}`)
     setEvent(res)
@@ -17,7 +18,8 @@ const EventInfo = (props: Props) => {
   }, [])
   
   useEffect(() => {
-    console.log("current event", event)
+    //console.log("current event", event)
+    event?setImg(event.image):null
   }, [event])
 
   const router = useRouter()
@@ -29,6 +31,8 @@ const EventInfo = (props: Props) => {
 
       <div>
         {JSON.stringify(event)}
+        
+        <img src ={img}/>
       </div>
       
     </div>
