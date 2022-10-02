@@ -143,6 +143,11 @@ export default function Header(props: any) {
                     </Link>
                   </li>
                   <li>
+                    <Link href="/faq">
+                      <a className="btn btn-ghost normal-case">FAQ</a>
+                    </Link>
+                  </li>
+                  <li>
                     <a
                       className="btn btn-ghost normal-case"
                       onClick={() => {
