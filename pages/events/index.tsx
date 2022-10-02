@@ -11,12 +11,7 @@ import EventsGroup from "../../components/EventsGroup";
 
 const Events = () => {
   const [eventList, setEventList] = useState([])
-  const [filter, setFilter] = useState()
-  const filterValues = [
-    "Filter A-e",
-    "Filter B-e",
-    "Filter C-e"
-  ]
+  const [filter, setFilter] = useState(undefined)
 
   const setEventFilter = (value) => {
     setFilter(value)
@@ -35,7 +30,7 @@ const Events = () => {
   
   return (
     <div className="page-container flex-row gap-8">
-      <Drawer setFilter = {setEventFilter} filters={filterValues}/>
+      <Drawer setFilter = {setEventFilter} form={true}/>
       <div>
         {eventList ? <EventsGroup title="Events" description="Here are all the events being hosted by your coworkers!!" events={eventList}/> : "loading"}
       </div>
