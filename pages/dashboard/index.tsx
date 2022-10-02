@@ -1,35 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Drawer from "../../components/Drawer";
 import EventsGroup from "../../components/EventsGroup";
 import { getUsersFromEvent, getAllEvents } from "../../back-end/functions";
 const dash = () => {
-  const mockEventList = [
-    {
-      id: "123123123",
-      title: "Event 1",
-      description: "This is a description",
-      startDate: new Date(Date.now()),
-      endDate: new Date(Date.now()),
-      maxParticipants: 10,
-      location: "In Person",
-      office: "Toronto",
-      eventType: "Video Games",
-    },
-  ];
+  const [eventList, setEventList] = useState([])
+  const [filter, setFilter] = useState()
+  const filterValues = [
+    "My Events",
+    "Joined Events",
+  ]
+  const setEventFilter = (value) => { setFilter(value) }
 
-  const onClick = async () => {
-    console.log("clicked");
-    //get all events
-    const users = await getUsersFromEvent("3EITQccVLierGsnA64uo");
+  const getEvents = async () => {
+    const events = await getAllEvents()
+    setEventList(events)
+  }
 
-    console.log(users);
-  };
+  useEffect(() => { getEvents() }, [])
 
+  useEffect(() => {console.log("all events", eventList)}, [eventList])
+
+  useEffect(()=>{console.log(filter, 'set')},[filter])
+
+
+  
   return (
-    <div>
-      <Drawer />
-      <button onClick={onClick}>Get All Events</button>
-      {/* <EventsGroup title="Events" description="" events={mockEventList} /> */}
+    <div className="page-container flex-row">
+      <Drawer setFilter = {setEventFilter} filters={filterValues}/>
+      <div>
+        {eventList ? <EventsGroup title="Events" description="Here are all the events being hosted by your coworkers!!" events={eventList}/> : "loading"}
+      </div>
     </div>
   );
 };
