@@ -8,14 +8,18 @@ type Props = {}
 const EventInfo = (props: Props) => {
   const [event, setEvent] = useState(undefined)
   const [ img, setImg] = useState(undefined)
+
   const eventQuery = async () => {
     const res = await getEvent(`${router.query.id}`)
     setEvent(res)
   }
 
   useEffect(() => {
-    eventQuery()
-  }, [])
+    if (!event) {
+      eventQuery()
+    }
+    
+  })
   
   useEffect(() => {
     //console.log("current event", event)
