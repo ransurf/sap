@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
+import Router from "next/router";
 import React, { useEffect, useState, useMemo } from "react";
 import {
   getEvent,
   getUsersFromEvent,
   joinEvent,
-  leaveEvent
+  leaveEvent,
 } from "../../../back-end/functions";
 import { EventDetails } from "../../../components/EventCard";
 import Image from "next/image";
@@ -32,7 +33,7 @@ const EventInfo = (props: Props) => {
   const refreshData = () => {
     eventQuery();
     getParticipants();
-  }
+  };
 
   useEffect(() => {
     console.log("eventInfo", router.query.id);
@@ -58,7 +59,8 @@ const EventInfo = (props: Props) => {
 
   const renderParticipants = useMemo(() => {
     return participants.map((participant: any, index: number) => {
-      const { firstName, lastName, position, location, email } = participant;
+      const { uid, firstName, lastName, age, gender, position, location, email } =
+        participant;
       return (
         <tr key={index}>
           <th>{index + 1}</th>
@@ -82,12 +84,25 @@ const EventInfo = (props: Props) => {
             </div>
           </td>
           <td>
-            <div className="text-sm text-secondary">{location}</div>
+            <div className="">{age}</div>
+          </td>
+          <td>
+            <div className="">{gender}</div>
+          </td>
+          <td>
+            <div className="text-sm">{location}</div>
           </td>
           <td>{email}</td>
-          {/* <th>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </th> */}
+          <th>
+            <button
+              className="btn btn-ghost btn-xs"
+              onClick={() =>
+                Router.push({ pathname: "/profile", query: { id: uid } })
+              }
+            >
+              details
+            </button>
+          </th>
         </tr>
       );
     });
@@ -145,7 +160,7 @@ const EventInfo = (props: Props) => {
             </div>
             <div className="font-bold">Location</div>
             <div className="text-sm text-secondary font-bold">
-              {event.location} {" "}
+              {event.location}{" "}
               {event.location !== "Online" ? `\@ ${event.office}` : ""}
             </div>
           </div>
@@ -160,6 +175,8 @@ const EventInfo = (props: Props) => {
               <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
                 <th>From</th>
                 <th>Email</th>
               </tr>

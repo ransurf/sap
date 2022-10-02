@@ -41,7 +41,7 @@ const EventCard = ({ event }: Props) => {
             </div>
           ))} */}
         </div>
-        <button className="btn btn-primary" onClick={()=>Router.push({pathname: '/events/view', query: { id: id}})}> 
+        <button className="btn btn-primary" onClick={()=>Router.push({pathname: '/events/view', query: { id: id }})}> 
             View Event
       </button>
       </div>
