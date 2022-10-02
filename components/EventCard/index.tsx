@@ -48,6 +48,10 @@ const EventCard = ({ event }: Props) => {
             {moment(startDate.toDate()).format("lll")}
           </div>
         </h2>
+        <div className="text-sm font-bold">
+          {event.location || "N/A"}{" "}
+          {event.location !== "Online" ? `\@ ${event.office}` : ""}
+        </div>
         <p>
           {description.length > 14
             ? description.substring(0, 40) + "…"

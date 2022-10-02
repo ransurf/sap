@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState, useMemo } from "react";
 import { getUserDataById } from "../../back-end/functions";
 import { useAuth } from "../../back-end/authContext";
+import Image from "next/image";
 
 type Props = {};
 
@@ -21,12 +22,11 @@ const Profile = (props: Props) => {
   }, [router.query]);
   return profile ? (
     <div className="page-container">
-      <div className="flex flex-col justify-center items- bg-base-200">
+      <div className="flex flex-col justify-center items- bg-base-200 rounded-3xl">
         <div className="hero-content flex flex-col lg:flex-row">
-          <img
-            src="https://placeimg.com/260/400/arch"
-            className="max-w-sm rounded-lg shadow-2xl"
-          />
+          <div className="mask mask-squircle w-48 h-48">
+            <Image src={profile.profilePic || "https://via.placeholder.com/300"} width={192} height={192} alt="Avatar" />
+          </div>
           <div className="flex flex-col gap-4">
             <h1 className="text-5xl font-bold ">{`${profile.firstName} ${profile.lastName}`}</h1>
             <p className="text-lg italic">{profile.bio}</p>

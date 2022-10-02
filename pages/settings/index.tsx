@@ -2,12 +2,13 @@ import * as React from "react";
 import Form, {
   SelectInputsProps,
   TextInputsProps,
-  FormValues
+  FormValues,
 } from "../../components/Form";
 import { useForm } from "react-hook-form";
 import { updateUserInfo } from "../../back-end/functions";
 import { useAuth } from "../../back-end/authContext";
-import { LocationSelect, PositionSelect } from "../../formData";
+import { OfficeSelect, PositionSelect } from "../../formData";
+import { toast } from "react-toastify";
 
 export default function Settings() {
   const { user, loading } = useAuth();
@@ -71,10 +72,10 @@ export default function Settings() {
 
   const mockSelectInputs: SelectInputsProps[] = [
     PositionSelect,
-    LocationSelect,
+    OfficeSelect,
     {
-      label: 'Gender',
-      value: 'gender',
+      label: "Gender",
+      value: "gender",
       options: [
         {
           value: "Male",
@@ -93,8 +94,7 @@ export default function Settings() {
           label: "Other",
         },
       ],
-
-    }
+    },
   ];
 
   const onSubmit = (data: any, event: any) => {
@@ -104,7 +104,15 @@ export default function Settings() {
       user,
     };
     console.log("uploadUserData", newData, user);
-    updateUserInfo(newData);
+    updateUserInfo(newData)
+      .then((res) => {
+        console.log("res", res);
+        toast.success("Profile updated successfully");
+      })
+      .catch((err) => {
+        console.log("err", err);
+        toast.error("Profile update failed");
+      });
   };
 
   return (

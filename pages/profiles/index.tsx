@@ -7,15 +7,18 @@ type Props = {};
 const Profiles = (props: Props) => {
   const [users, setUsers] = useState<any>([]);
   const getUsers = async () => {
-    const Users = await getAllUsers();
-    setUsers(Users);
+    const fetchedUsers = await getAllUsers();
+    console.log('fetchedUsers', fetchedUsers)
+    setUsers(fetchedUsers);
+    console.log("users", fetchedUsers);
   };
 
   useEffect(() => {
     getUsers();
   }, []);
   return (
-    users && users.length>0 && (
+    users &&
+    users.length > 0 && (
       <div className="page-container">
         <ProfileTable profiles={users} />
       </div>

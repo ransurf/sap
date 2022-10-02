@@ -4,13 +4,16 @@ import {
   getEvent,
   getUsersFromEvent,
   joinEvent,
+  getUserDataById,
   leaveEvent,
+  deleteEvent,
 } from "../../../back-end/functions";
 import { EventDetails } from "../../../components/EventCard";
 import Image from "next/image";
 import moment from "moment";
 import { useAuth } from "../../../back-end/authContext";
 import ProfileTable from "../../../components/ProfileTable";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
 // import Modal from "react-daisyui";
 
 type Props = {};
@@ -28,8 +31,15 @@ const EventInfo = (props: Props) => {
     setEvent(res);
   };
   const getParticipants = async () => {
-    const res = await getUsersFromEvent(eventId);
+    const userData: any = [];
+    const res = await getUsersFromEvent(eventId).then((res) => {
+      console.log("user details res", res);
+      res.forEach(async (user) => {
+        userData.push(await getUserDataById(user.uid.uid));
+      });
+    });
     console.log("participants ::", res);
+
     setParticipants(res);
   };
 
@@ -62,6 +72,16 @@ const EventInfo = (props: Props) => {
     refreshData();
   };
 
+  const onEditEvent = () => {
+    console.log("edit event");
+    router.push(`/events/edit/${event.id}`);
+  };
+
+  const onDeleteEvent = () => {
+    console.log("delete event");
+    leaveEvent(user, event.id);
+  };
+
   return (
     <>
       {event && (
@@ -86,7 +106,11 @@ const EventInfo = (props: Props) => {
                   : ""}{" "}
                 Participant(s)
               </p>
-              {user && event && event.participants?.some(particip => particip.uid == user.claims.user_id ) ? (
+              {user &&
+              event &&
+              event.participants?.some(
+                (particip) => particip.uid == user.claims.user_id
+              ) ? (
                 <button
                   className="btn btn-sm btn-primary"
                   onClick={() => onLeaveEvent()}
@@ -101,6 +125,22 @@ const EventInfo = (props: Props) => {
                   Join Event
                 </button>
               )}
+              {user && event && event.host === user.claims.user_id ? (
+                <div className="flex gap-4 mt-4">
+                  <button
+                    className="btn btn-circle btn-ghost btn-secondary text-xl"
+                    onClick={() => onLeaveEvent()}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className="btn btn-circle btn-ghost btn-secondary text-xl"
+                    onClick={() => onLeaveEvent()}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
           {console.log("full event", event)}
@@ -131,9 +171,7 @@ const EventInfo = (props: Props) => {
 
           <div>
             <h2 className="page-subtitle">Participants</h2>
-                <ProfileTable
-                  profiles={event?.participants}
-                />
+            <ProfileTable profiles={event?.participants} />
           </div>
         </div>
       )}

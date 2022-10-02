@@ -1,28 +1,28 @@
-import React, {useMemo} from "react";
+import React, { useMemo, useState } from "react";
 import Router from "next/router";
 import { getAllUsers, getUserData } from "../../back-end/functions";
+import Image from "next/image";
 
 type Props = {
-    profiles: any;
+  profiles: any;
 };
 
-const ProfileTable = ({profiles: participants}: Props) => {
-  console.log("participants",participants)
-  
+const ProfileTable = ({ profiles: participants }: Props) => {
   const renderParticipants = useMemo(() => {
-      
-      return participants.map((participant: any, index: number) => {
+    console.log("memo renderParticipants", participants);
+
+    return participants?.map((participant: any, index: number) => {
       const {
         id,
         firstName,
         lastName,
         age,
+        profilePic,
         gender,
         position,
         location,
         email,
       } = participant;
-
 
       return (
         <tr key={index}>
@@ -31,18 +31,21 @@ const ProfileTable = ({profiles: participants}: Props) => {
             <div className="flex items-center space-x-3">
               <div className="avatar">
                 <div className="mask mask-squircle w-12 h-12">
-                  {/* <Image
-                    src="https://placeimg.com/400/225/arch"
-                    width={20}
-                    height={20}
+                  <Image
+                    src={profilePic || "https://via.placeholder.com/48"}
+                    width={48}
+                    height={48}
                     alt="Avatar"
-                  /> */}
-                  Pic
+                  />
                 </div>
               </div>
               <div>
-                <div className="font-bold">{`${firstName || ''} ${lastName || ''}`}</div>
-                {position && <span className="badge badge-ghost badge-sm">{position}</span>}
+                <div className="font-bold">{`${firstName || ""} ${
+                  lastName || ""
+                }`}</div>
+                {position && (
+                  <span className="badge badge-ghost badge-sm">{position}</span>
+                )}
               </div>
             </div>
           </td>
@@ -58,12 +61,13 @@ const ProfileTable = ({profiles: participants}: Props) => {
           <td>{email}</td>
           <th>
             <button
-              className="btn btn-ghost btn-xs"
+              disabled={!firstName}
+              className="btn btn-secondary btn-xs text-white"
               onClick={() =>
                 Router.push({ pathname: "/profile", query: { id: id } })
               }
             >
-              details
+              {firstName ? "View Details" : "No Info"}
             </button>
           </th>
         </tr>
@@ -82,7 +86,7 @@ const ProfileTable = ({profiles: participants}: Props) => {
             <th>Gender</th>
             <th>From</th>
             <th>Email</th>
-            <th>More</th>
+            <th>Profile</th>
           </tr>
         </thead>
         <tbody>{renderParticipants}</tbody>
