@@ -73,7 +73,8 @@ const createNewEvent = async ({
 		maxAttendees: maxAttendees,
 		extraInfo: extraInfo ? extraInfo : "",
 		participants: arrayUnion({
-			[user?.claims?.user_id]: "",
+			uid: user?.claims.user_id,
+			extraInfo: "",
 		}),
 	});
 
@@ -95,6 +96,9 @@ const createNewEvent = async ({
 		description: description,
 		location: location,
 	};
+
+	console.log("eventInfo: ", eventInfo);
+	console.log("eventinfo json", JSON.stringify(eventInfo));
 
 	fetch(
 		"https://us-central1-saphack2022.cloudfunctions.net/addEventToCalendar",

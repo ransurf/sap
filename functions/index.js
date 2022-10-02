@@ -22,11 +22,11 @@ function addEvent(event, auth) {
 					summary: event.eventName,
 					description: event.description,
 					start: {
-						timesamp: event.startDate,
+						dateTime: event.startDate,
 						timeZone: TIME_ZONE,
 					},
 					end: {
-						timesamp: event.endDate,
+						dateTime: event.endDate,
 						timeZone: TIME_ZONE,
 					},
 
