@@ -22,7 +22,6 @@ interface Props {
 const EventCard = ({ event }: Props) => {
   const { id, title, description, startDate, location, office, eventType} = event;
   const tags = [eventType]
-  console.log("event card", event);
   return (
     <div className="card w-96 bg-base-100 shadow-xl" key={title}>
       <figure>

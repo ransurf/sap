@@ -6,6 +6,9 @@
     .page-title {
       @apply text-3xl font-bold mb-4;
     }
+    .page-subtitle {
+      @apply text-xl font-bold mb-4;
+    }
     .page-container {
         @apply flex flex-col p-8;
     }

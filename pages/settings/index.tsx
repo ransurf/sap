@@ -72,6 +72,29 @@ export default function Settings() {
   const mockSelectInputs: SelectInputsProps[] = [
     PositionSelect,
     LocationSelect,
+    {
+      label: 'Gender',
+      value: 'gender',
+      options: [
+        {
+          value: "Male",
+          label: "Male",
+        },
+        {
+          value: "Female",
+          label: "Female",
+        },
+        {
+          value: "They/Them",
+          label: "They/Them",
+        },
+        {
+          value: "Other",
+          label: "Other",
+        },
+      ],
+
+    }
   ];
 
   const onSubmit = (data: any, event: any) => {
