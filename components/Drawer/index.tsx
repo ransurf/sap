@@ -70,7 +70,7 @@ const Drawer = (props: Props) => {
           {filters?.map((val, key) => {
             return (
               <li onClick={() => setFilter(val)} key={key}>
-                <a>{val}</a>
+                <a className="text-md font-bold">{val}</a>
               </li>
             );
           })}

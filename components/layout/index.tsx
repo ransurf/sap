@@ -1,5 +1,7 @@
 import Header from "./header";
 import Footer from "./footer";
+import { ToastContainer } from "react-toastify";
+import React from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -16,6 +18,7 @@ export default function Layout({ children }: Props) {
       </div>
       <div className="flex flex-col w-full h-full">{children}</div>
       {/* <Footer /> */}
+
     </div>
   );
 }

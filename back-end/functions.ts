@@ -11,6 +11,7 @@ interface UserInfo {
   lastName: string;
   profilePic: string;
   bio: string;
+  office: string;
   age: number;
   position: string;
   location: string;
@@ -164,8 +165,8 @@ const updateUserInfo = async (userInfo: UserInfo) => {
     profilePic,
     bio,
     age,
+    office,
     position,
-    location,
     gender,
   } = userInfo;
 
@@ -177,7 +178,7 @@ const updateUserInfo = async (userInfo: UserInfo) => {
     bio,
     age,
     position,
-    location,
+    office,
     gender
   );
 

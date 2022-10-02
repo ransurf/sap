@@ -34,14 +34,14 @@ const Dashboard = () => {
       setEventList(
         allEvents.filter((event) => event.host === user.claims.user_id)
       );
-      setDesc("Here are all the events that you have made:");
+      setDesc("All upcoming events you are hosting");
     } else if (filter == filterValues[1]) {
       setEventList(
         allEvents.filter((event) =>
           Array.from(event.participants).includes(user.claims.user_id)
         )
       );
-      setDesc("Here are all the events that you are a part of:");
+      setDesc("All upcoming events you joined or are hosting");
     } else {
       setEventList(allEvents);
     }
@@ -54,6 +54,7 @@ const Dashboard = () => {
         {eventList ? (
           <EventsGroup
             title={filter ? filter : "Dashboard"}
+            modifyEvents={filter === 'My Events'}
             description={desc}
             events={eventList}
           />

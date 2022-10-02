@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { getAllEvents } from "../../back-end/functions";
 import Drawer from "../../components/Drawer";
 import EventsGroup from "../../components/EventsGroup";
+import { toast } from "react-toastify";
 
 const Events = () => {
   const [eventList, setEventList] = useState([]);
@@ -29,7 +30,9 @@ const Events = () => {
     console.log(filter, "filter set");
     let tempEvents = allEvents;
     if (filter?.location) {
-      tempEvents = tempEvents.filter((event) => event.location === filter.location);
+      tempEvents = tempEvents.filter(
+        (event) => event.location === filter.location
+      );
     }
     if (filter?.eventType) {
       tempEvents = tempEvents.filter((event) => event.eventType === filter.eventType);
@@ -37,7 +40,7 @@ const Events = () => {
     if (filter?.office) {
       tempEvents = tempEvents.filter((event) => event.office === filter.office);
     }
-    console.log('tempEvents', tempEvents)
+    console.log("tempEvents", tempEvents);
     setEventList(tempEvents);
   }, [filter]);
 

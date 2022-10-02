@@ -5,12 +5,14 @@ import {
   getUsersFromEvent,
   joinEvent,
   leaveEvent,
+  deleteEvent,
 } from "../../../back-end/functions";
 import { EventDetails } from "../../../components/EventCard";
 import Image from "next/image";
 import moment from "moment";
 import { useAuth } from "../../../back-end/authContext";
 import ProfileTable from "../../../components/ProfileTable";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
 // import Modal from "react-daisyui";
 
 type Props = {};
@@ -62,6 +64,17 @@ const EventInfo = (props: Props) => {
     refreshData();
   };
 
+  const onEditEvent = () => {
+    console.log("edit event");
+    router.push(`/events/edit/${event.id}`);
+  };
+
+  const onDeleteEvent = () => {
+    console.log("delete event");
+    leaveEvent(user, event.id);
+  };
+
+
   return (
     <>
       {event && (
@@ -101,6 +114,22 @@ const EventInfo = (props: Props) => {
                   Join Event
                 </button>
               )}
+              {user && event && event.host === user.claims.user_id ? (
+                <div className="flex gap-4 mt-4">
+                  <button
+                    className="btn btn-circle btn-ghost btn-secondary text-xl"
+                    onClick={() => onLeaveEvent()}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className="btn btn-circle btn-ghost btn-secondary text-xl"
+                    onClick={() => onLeaveEvent()}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
           {console.log("full event", event)}
