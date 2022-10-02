@@ -11,28 +11,40 @@ import EventsGroup from "../../components/EventsGroup";
 
 const Events = () => {
   const [eventList, setEventList] = useState([])
-  const [filter, setFilter] = useState(undefined)
+  const [allEvents, setAllEvents] = useState([])
+  const [filter, setFilter] = useState(null)
 
-  const setEventFilter = (value) => {
-    setFilter(value)
-  }
+  const setEventFilter = (value) => { setFilter(value) }
 
   const getEvents = async () => {
     const events = await getAllEvents()
+    setAllEvents(events)
     setEventList(events)
   }
 
-  useEffect(() => { getEvents() }, [])
+  useEffect(() => { 
+    getEvents()
+  }, [])
 
-  useEffect(() => { console.log("all events", eventList) }, [eventList])
-  
-  useEffect(()=>{console.log(filter, 'set')},[filter])
+  useEffect(()=>{
+    console.log(filter, 'filter set')
+    if (filter == null) { setEventList(allEvents) }
+    if (filter?.location) {
+      setEventList(eventList.filter(event=>event.location === filter.location))
+    }
+    // if (filter.eventType) {
+    //   setEventList(eventList.filter(event=>event.location === filter.location))
+    // }
+    if (filter?.office) {
+      setEventList(eventList.filter(event=>event.office === filter.office))
+    }
+  },[filter])
   
   return (
     <div className="page-container flex-row gap-8">
-      <Drawer setFilter = {setEventFilter} form={true}/>
+      <Drawer setFilter = {setEventFilter} form={true} />
       <div>
-        {eventList ? <EventsGroup title="Events" description="Here are all the events being hosted by your coworkers!!" events={eventList}/> : "loading"}
+        {eventList ? <EventsGroup title="Events" description="Here are all the events in your organization!!" events={eventList}/> : "loading"}
       </div>
     </div>
   );
