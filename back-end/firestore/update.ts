@@ -32,9 +32,20 @@ const joinEvent = async (
 };
 
 const leaveEvent = async (user: any, eventID: string) => {
-	await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
-		joinedEvents: arrayRemove(eventID),
-	});
+	if (eventID) {
+		await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
+			joinedEvents: arrayRemove(eventID),
+		});
+	}
+
+	let aggregatedEventsRef = doc(db, `aggregatedEvents/${eventID}`);
+	await setDoc(
+		aggregatedEventsRef,
+		{
+			participants: arrayRemove(user?.claims?.user_id),
+		},
+		{ merge: true }
+	);
 };
 
 const updateUserInfo = async (
