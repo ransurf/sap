@@ -14,6 +14,7 @@ import moment from "moment";
 import { useAuth } from "../../../back-end/authContext";
 import ProfileTable from "../../../components/ProfileTable";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { toast } from "react-toastify";
 // import Modal from "react-daisyui";
 
 type Props = {};
@@ -77,9 +78,17 @@ const EventInfo = (props: Props) => {
     router.push(`/events/edit/${event.id}`);
   };
 
-  const onDeleteEvent = () => {
+  const onDeleteEvent = async () => {
     console.log("delete event");
-    leaveEvent(user, event.id);
+    await leaveEvent(user, event.id)
+      .then(() => {
+        toast.success("Event deleted successfully");
+        router.push("/events");
+      })
+      .catch((err) => {
+        console.log("deleteEvent err", err);
+        toast.error("Error deleting event");
+      });
   };
 
   return (
@@ -129,13 +138,13 @@ const EventInfo = (props: Props) => {
                 <div className="flex gap-4 mt-4">
                   <button
                     className="btn btn-circle btn-ghost btn-secondary text-xl"
-                    onClick={() => onLeaveEvent()}
+                    onClick={() => onEditEvent()}
                   >
                     <FaEdit />
                   </button>
                   <button
                     className="btn btn-circle btn-ghost btn-secondary text-xl"
-                    onClick={() => onLeaveEvent()}
+                    onClick={() => onDeleteEvent()}
                   >
                     <FaTrashAlt />
                   </button>
