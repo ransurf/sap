@@ -1,7 +1,12 @@
-import React from "react";
+import { SDK_VERSION } from "firebase-admin";
+import React, {useState,useEffect} from "react";
+import { getAllEvents } from "../../back-end/functions";
 import Drawer from "../../components/Drawer";
 import EventsGroup from "../../components/EventsGroup";
+
 const events = () => {
+  const [eventList, setEventList] = useState([])
+
   const mockEventList = [
     {
       title: "Event List 1",
@@ -11,19 +16,36 @@ const events = () => {
           eventId: '123123123',
           title: "Event 1",
           description: "This is a description",
-          tags: ["tag1", "tag2"],
-          date: "2021-10-10",
+          startDate: new Date(Date.now()),
+          endDate: new Date(Date.now()),
+          maxParticipants: 10,
+          location: "In Person",
+          office: "Toronto",
+          eventType: "Video Games",
         },
       ],
     },
   ];
+
+  const getEvents = async () => {
+    const events = await getAllEvents()
+    setEventList(events)
+  }
+
+  useEffect(() => {
+    getEvents();
+  }, [])
+
+  useEffect(() => {
+    console.log("all events", eventList)
+  }, [eventList])
+  
+
   return (
     <div className="page-container flex-row">
       <Drawer />
       <div>
-        {mockEventList.map((eventGroup, index) => {
-          return <EventsGroup {...eventGroup} key={index} />;
-        })}
+        {eventList ? <EventsGroup title="Title" description="description" events={eventList}/> : "loading"}
       </div>
     </div>
   );
