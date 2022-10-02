@@ -1,12 +1,32 @@
 import React from 'react'
-
+import Form, {SelectInputsProps, FormValues} from '../Form';
+import { LocationSelect, PositionSelect } from "../../formData";
+import { useForm } from "react-hook-form";
 type Props = {
   setFilter?: (...args: any) => void;
-  filters: string[];
+  filters?: string[];
+  form?: boolean;
 }
 
 const Drawer = (props: Props) => {
-  const {setFilter, filters} = props;
+  const {setFilter, filters, form} = props;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const inputValues: SelectInputsProps[] = [
+    {label: "Position", value: "position", options: [ { label: "none", value: "" },{ label: "Developer", value: "Developer" }, { label: "UI/UX Designer", value: "UI/UX Designer" }, { label: "Product Manager", value: "Product Manager" }, { label: "Sales and Marketing", value: "Sales and Marketing" }, { label: "Other", value: "Other" }, ]},
+    { label: "Location", value: "location", options: [ { label: "none", value: "" },{ value: "Online", label: "Online", }, { value: "In Office", label: "In Office", }, { value: "In Person", label: "In Person", }, ], },
+    {label: "Event Type", value: "eventType", options: [ { label: "none", value: "" },{ value: "Food and Drink", label: "Food and Drink", }, { value: "Board Games", label: "Board Games", }, { value: "Video Games", label: "Video Games", }, { value: "Fitness", label: "Fitness", }, { value: "Sports", label: "Sports", }, { value: "Arts", label: "Arts", }, { value: "Socializing", label: "Socializing", }, { value: "Music", label: "Music", }, { value: "Media", label: "Media", }, {value: "Other",label: "Other",}, ]},
+    {label: "Office", value: "office",options: [{ label: "none", value: "" },{ label: "Calgary", value: "Calgary" },{ label: "Montreal", value: "Montreal" },{ label: "Ottowa", value: "Ottowa" },{ label: "Toronto", value: "Toronto" },{ label: "Vancouver", value: "Vancouver" },{ label: "Waterloo", value: "Waterloo" },]}
+  ]
+  const onSubmit = (data: any, event: any) => {
+    event.preventDefault();
+    console.log('filter',data)
+    setFilter(data)
+  };
   return (
     <div className="drawer max-w-xs">
         <div className="drawer-side">
@@ -15,6 +35,14 @@ const Drawer = (props: Props) => {
               {filters?.map((val,index) => {
                 return <li onClick={()=>setFilter(val)}><a>{val}</a></li>
               })}
+              { 
+                form? <Form
+                  selectInputs={inputValues}
+                  errors={errors}
+                  register={register}
+                  onSubmit={handleSubmit(onSubmit)}
+                />: null
+              }
               <button className='btn btn-secondary' onClick={()=>setFilter(null)}>clear filter</button>
             </ul>
         
