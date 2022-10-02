@@ -22,7 +22,6 @@ const createUserDocument = async (user: any) => {
 const createUserInformation = async (
 	user: any,
 	name: string,
-	profilePic: string,
 	bio: string,
 	age: number,
 	position: string,

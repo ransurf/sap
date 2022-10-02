@@ -64,7 +64,6 @@ const createUserInformation = async (
 	await Create.createUserInformation(
 		user,
 		name,
-		profilePic,
 		bio,
 		age,
 		position,
