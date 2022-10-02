@@ -45,7 +45,7 @@ const Events = () => {
     <div className="page-container flex-row">
       <Drawer />
       <div>
-        {eventList ? <EventsGroup title="Events" description="" events={eventList}/> : "loading"}
+        {eventList ? <EventsGroup title="Events" description="Here are all the events being hosted by your coworkers!!" events={eventList}/> : "loading"}
       </div>
     </div>
   );

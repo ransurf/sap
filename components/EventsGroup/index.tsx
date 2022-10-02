@@ -10,9 +10,9 @@ type Props = {
 const EventsGroup = (props: Props) => {
   const { title, description, events } = props;
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full gap-8">
       <h2 className="text-xl font-bold mb-2">{title}</h2>
-      <p className="text-md mb-2">{description}</p>
+      {description? <p className="text-md mb-2">{description}</p>:null}
       {events.map((event, index) => {
         console.log("event", event);
         return <EventCard event={event} key={index}/>;
