@@ -67,9 +67,9 @@ const Drawer = (props: Props) => {
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content gap-2">
-          {filters?.map((val, index) => {
+          {filters?.map((val, key) => {
             return (
-              <li onClick={() => setFilter(val)}>
+              <li onClick={() => setFilter(val)} key={key}>
                 <a>{val}</a>
               </li>
             );
