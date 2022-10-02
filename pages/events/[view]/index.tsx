@@ -86,9 +86,7 @@ const EventInfo = (props: Props) => {
                   : ""}{" "}
                 Participant(s)
               </p>
-              {user &&
-              event.participants &&
-              event.participants[user.claims.user_id] ? (
+              {user && event && event.participants?.some(particip => particip.uid == user.claims.user_id ) ? (
                 <button
                   className="btn btn-sm btn-primary"
                   onClick={() => onLeaveEvent()}
