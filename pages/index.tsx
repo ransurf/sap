@@ -24,6 +24,7 @@ const Home: NextPage = () => {
         email: request.email,
         name: request.displayName,
       });
+      analytics.track(`user-signed-in`);
       Router.push("/dashboard");
     }
   };
