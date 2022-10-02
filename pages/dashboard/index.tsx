@@ -25,10 +25,6 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    console.log("all events", eventList);
-  }, [eventList]);
-
-  useEffect(() => {
     console.log(filter, "filter set");
     if (filter == filterValues[0]) {
       setEventList(
@@ -36,11 +32,15 @@ const Dashboard = () => {
       );
       setDesc("Here are all the events that you have made:");
     } else if (filter == filterValues[1]) {
+      console.log(allEvents)
       setEventList(
-        allEvents.filter((event) =>
-          Array.from(event.participants).includes(user.claims.user_id)
-        )
-      );
+        
+        allEvents.filter(event=>{
+          console.log('event.participants', event.participants)
+          return event.participants.find((p)=>p.uid === user.claims.user_id)
+        })
+
+      )
       setDesc("Here are all the events that you are a part of:");
     } else {
       setEventList(allEvents);
