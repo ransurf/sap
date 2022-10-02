@@ -86,7 +86,7 @@ const EventInfo = (props: Props) => {
 
   const onDeleteEvent = async () => {
     console.log("delete event");
-    await leaveEvent(user, event.id)
+    await deleteEvent(user, event.id)
       .then(() => {
         toast.success("Event deleted successfully");
         router.push("/events");
