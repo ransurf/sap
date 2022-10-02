@@ -11,11 +11,12 @@ import {
 } from "firebase/firestore";
 
 const createUserDocument = async (user: any) => {
+	console.log("user: ", user);
 	await setDoc(
 		doc(db, `Users/${user.uid}`),
 		{
 			email: user.email,
-			profilePic: user?.claims.picture,
+			profilePic: user.photoURL,
 		},
 		{ merge: true }
 	);
