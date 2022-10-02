@@ -33,7 +33,7 @@ const createUserInformation = async (
 		doc(db, `Users/${user?.claims.user_id}`),
 		{
 			name: name,
-			profilePic: profilePic,
+			profilePic: user?.claims.picture,
 			bio: bio,
 			age: age,
 			position: position,
@@ -84,18 +84,11 @@ const createNewEvent = async (
 
 	//create json object and add eventinfo to it
 	const eventInfo = {
-		eventID: eventID,
-		title: title,
-		image: image ? image : "",
+		eventName: title,
 		startDate: startDate,
 		endDate: endDate,
 		description: description,
 		location: location,
-		office: office,
-		host: user?.claims.user_id,
-		maxAttendees: maxAttendees,
-		extraInfo: extraInfo ? extraInfo : "",
-		participants: arrayUnion(user?.claims.user_id),
 	};
 
 	fetch(
