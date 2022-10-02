@@ -4,7 +4,9 @@ import {
 	doc,
 	arrayUnion,
 	setDoc,
+	collection,
 } from "firebase/firestore";
+import { EventInfo } from "../functions";
 import { db } from "../firebaseConfig/init";
 
 const joinEvent = async (
@@ -24,7 +26,7 @@ const joinEvent = async (
 		aggregatedEventsRef,
 		{
 			participants: arrayUnion({
-				uid: user?.claims?.user_id,
+				uid: user?.claims?.user_id.toString(),
 				extraInfo: extraInformation,
 			}),
 		},
@@ -61,15 +63,50 @@ const updateUserInfo = async (
 	gender: string
 ) => {
 	await updateDoc(doc(db, `Users/${user?.claims?.user_id}`), {
-		firstName: firstName ? firstName : null,
-		lastName: lastName ? lastName : null,
-		profilePic: profilePic ? profilePic : null,
-		bio: bio ? bio : null,
-		age: age ? age : null,
-		position: position ? position : null,
-		location: location ? location : null,
-		gender: gender ? gender : null,
+		firstName: firstName,
+		lastName: lastName,
+		profilePic: profilePic,
+		bio: bio,
+		age: age,
+		position,
+		location,
+		gender,
 	});
 };
 
-export { joinEvent, leaveEvent, updateUserInfo };
+const updateEventInfo = async ({
+	user,
+	title,
+	image,
+	startDate,
+	endDate,
+	eventType,
+	description,
+	location,
+	office,
+	host,
+	maxAttendees,
+	extraInfo,
+}: EventInfo) => {
+	const docRef = doc(collection(db, "aggregatedEvents"));
+	console.log("eventType", eventType);
+	await updateDoc(docRef, {
+		title: title,
+		image: image ? image : "",
+		startDate: startDate,
+		endDate: endDate,
+		description: description,
+		eventType: eventType,
+		location: location,
+		office: office,
+		host: user?.claims.user_id,
+		maxAttendees: maxAttendees,
+		extraInfo: extraInfo ? extraInfo : "",
+		participants: arrayUnion({
+			uid: user?.claims.user_id,
+			extraInfo: "",
+		}),
+	});
+};
+
+export { joinEvent, leaveEvent, updateUserInfo, updateEventInfo };
