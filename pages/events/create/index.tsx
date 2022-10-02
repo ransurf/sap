@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../../back-end/authContext";
 import {LocationSelect, OfficeSelect, EventTypeSelect} from '../../../formData'
 import {createNewEvent} from '../../../back-end/functions'
+import Router from "next/router";
+import { base64Encode } from "@firebase/util";
 
 type Props = {};
 
@@ -36,7 +38,7 @@ const CreateEvent = (props: Props) => {
       },
     },
     {
-      label: "Date",
+      label: "Start Date",
       type: "datetime-local",
       value: "startDate",
       details: {
@@ -44,7 +46,7 @@ const CreateEvent = (props: Props) => {
       },
     },
     {
-      label: "Date",
+      label: "End Date",
       type: "datetime-local",
       value: "endDate",
       details: {
@@ -52,13 +54,15 @@ const CreateEvent = (props: Props) => {
       },
     },
     {
-      label: "Max Participants (leave empty for unlimited)",
+      label: "Max Participants (set 0 for unlimited)",
       type: "number",
       value: "maxAttendees",
-      details: {
-        required: "Max participants is required",
-      },
     },
+    {
+      label: "Upload Image",
+      type: "file",
+      value: "image"
+    }
   ];
 
   const createEventSelectFields: SelectInputsProps[] = [
@@ -69,17 +73,19 @@ const CreateEvent = (props: Props) => {
 
   const onSubmit = (data: any, event: any) => {
     event.preventDefault();
-    const dataWithDates = {
+    const formattedData = {
       ...data,
+      image: base64Encode(`${data.image}`),
       startDate: new Date(data.startDate),
       endDate: new Date(data.endDate),
     };
     const newData = {
-      ...dataWithDates,
+      ...formattedData,
       user,
     };
     console.log("createEvent", newData, user);
     createNewEvent(newData);
+    Router.push('/dashboard')
   };
 
   return (

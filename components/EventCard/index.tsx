@@ -15,7 +15,7 @@ interface Props {
 }
 
 const EventCard = ({ event }: Props) => {
-  const { eventId, title, description, tags, date } = event;
+  const { eventId, title, description, date } = event;
   console.log("event card", event);
   return (
     <div className="card w-96 bg-base-100 shadow-xl" key={title}>
@@ -29,11 +29,11 @@ const EventCard = ({ event }: Props) => {
         </h2>
         <p>{description}</p>
         <div className="card-actions justify-end">
-          {tags.map((tagName, index) => (
+          {/* {tags.map((tagName, index) => (
             <div className="badge badge-outline" key={index}>
               {tagName}
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
       <button className="btn" onClick={()=>Router.push({pathname: '/eventInfo', query: { id: eventId}})}> 
