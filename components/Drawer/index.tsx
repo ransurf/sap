@@ -6,10 +6,11 @@ type Props = {
   setFilter?: (...args: any) => void;
   filters?: string[];
   form?: boolean;
+  reset?: boolean;
 };
 
 const Drawer = (props: Props) => {
-  const { setFilter, filters, form } = props;
+  const { setFilter, filters, form, reset } = props;
   const {
     register,
     handleSubmit,
@@ -82,9 +83,9 @@ const Drawer = (props: Props) => {
               onSubmit={handleSubmit(onSubmit)}
             />
           ) : null}
-          <button className="btn btn-secondary text-capitalize text-white" onClick={() => setFilter(null)}>
-            clear filter
-          </button>
+        {reset? (<button className="btn btn-secondary text-capitalize text-white" onClick={() => setFilter(null)}>
+          clear filter
+        </button>):null}
         </ul>
       </div>
     </div>
