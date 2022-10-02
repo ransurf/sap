@@ -1,13 +1,19 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useMemo } from "react";
-import { getEvent, getUsersFromEvent } from "../../back-end/functions";
+import {
+  getEvent,
+  getUsersFromEvent,
+  joinEvent,
+} from "../../back-end/functions";
 import { EventDetails } from "../../components/EventCard";
 import Image from "next/image";
 import moment from "moment";
+import { useAuth } from "../../back-end/authContext";
 
 type Props = {};
 
 const EventInfo = (props: Props) => {
+  const {user, loading} = useAuth();
   const router = useRouter();
   const [event, setEvent] = useState<any>();
   const [participants, setParticipants] = useState<any>([]);
@@ -22,7 +28,7 @@ const EventInfo = (props: Props) => {
   };
 
   useEffect(() => {
-    console.log('eventInfo', router.query.id);
+    console.log("eventInfo", router.query.id);
     eventQuery();
     getParticipants();
   }, []);
@@ -30,6 +36,11 @@ const EventInfo = (props: Props) => {
   useEffect(() => {
     console.log("current event", event);
   }, [event]);
+
+  const onJoinEvent = () => {
+    console.log("join event");
+    joinEvent(user, event.id, '');
+  };
 
   const renderParticipants = useMemo(() => {
     return participants.map((participant: any, index: number) => {
@@ -67,53 +78,64 @@ const EventInfo = (props: Props) => {
     });
   }, [participants]);
 
-  return (
-    event ? (
-      <div className="page-container gap-4">
-        <div>
-          <h1 className="page-title">{event.title}</h1>
-          <p>{event.description}</p>
-        </div>
-        {/* show start and end date */}
-        <div>
-            <h2 className="card-title">Event Details</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <div className="font-bold">Start Date</div>
-                <div className="text-sm opacity-50">
-                  {moment(event.startDate.toDate()).format("lll")}
-                </div>
-                <div className="font-bold">End Date</div>
-                <div className="text-sm opacity-50">
-                  {moment(event.endDate.toDate()).format("lll")}
-                </div>
-                <div className="font-bold">Location</div>
-                <div className="text-sm opacity-50">
-                  {event.location} @ {event.location !== "Online" ? event.office : ""}
-                </div>
-              </div>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="page-subtitle">Participants</h2>
-          <div className="overflow-x-auto w-full">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th>#</th>
-
-                  <th>Name</th>
-                  <th>Job</th>
-                </tr>
-              </thead>
-              <tbody>{renderParticipants}</tbody>
-            </table>
-          </div>
-          <div>{JSON.stringify(event)}</div>
+  return event ? (
+    <div className="page-container gap-4">
+      <div className="flex flex-col items-center">
+        <h1 className="page-title">{event.title}</h1>
+        <p>{event.description}</p>
+        <div className="flex flex-col mt-8">
+          <p className="font-bold mb-2">
+            {event.participants.length}
+            {event.maxParticipants > 0 ? `/${event.maxParticipants}` : ""}{" "}
+            Participant(s)
+          </p>
+          <button className="btn btn-sm btn-primary" onClick={() => onJoinEvent()}>
+            Join Event
+          </button>
         </div>
       </div>
-    ) : 'Loading'
+      {/* show start and end date */}
+      <div>
+        <h2 className="card-title">Event Details</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <div className="font-bold">Start Date</div>
+            <div className="text-sm opacity-50">
+              {moment(event.startDate.toDate()).format("lll")}
+            </div>
+            <div className="font-bold">End Date</div>
+            <div className="text-sm opacity-50">
+              {moment(event.endDate.toDate()).format("lll")}
+            </div>
+            <div className="font-bold">Location</div>
+            <div className="text-sm opacity-50">
+              {event.location} @{" "}
+              {event.location !== "Online" ? event.office : ""}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="page-subtitle">Participants</h2>
+        <div className="overflow-x-auto w-full">
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th>#</th>
+
+                <th>Name</th>
+                <th>Job</th>
+              </tr>
+            </thead>
+            <tbody>{renderParticipants}</tbody>
+          </table>
+        </div>
+        <div>{JSON.stringify(event)}</div>
+      </div>
+    </div>
+  ) : (
+    "Loading"
   );
 };
 
