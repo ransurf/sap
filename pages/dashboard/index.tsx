@@ -7,7 +7,7 @@ const Dashboard = () => {
   const { user, loading } = useAuth();
   const [eventList, setEventList] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
-  const [filter, setFilter] = useState("Joined Events");
+  const [filter, setFilter] = useState("");
   const [desc, setDesc] = useState("");
   const filterValues = ["My Events", "Joined Events"];
   const setEventFilter = (value) => {
@@ -17,13 +17,11 @@ const Dashboard = () => {
   const getEvents = async () => {
     const events = await getAllEvents();
     setAllEvents(events);
-    setEventList(
-      events
-    );
+    setEventList(events);
   };
 
   useEffect(() => {
-    getEvents();
+    getEvents().then(()=>setFilter("Joined Event"))
   }, []);
 
   useEffect(() => {
@@ -35,6 +33,15 @@ const Dashboard = () => {
       setDesc("Here are all the events that you have made:");
     } else if (filter == filterValues[1]) {
       console.log(allEvents)
+      setEventList(
+        
+        allEvents.filter(event=>{
+          console.log('event.participants', event.participants)
+          return event.participants.find((p)=>p.uid === user.claims.user_id)
+        })
+      )
+      setDesc("Here are all the events that you are a part of:");
+    }else {
       setEventList(
         
         allEvents.filter(event=>{
