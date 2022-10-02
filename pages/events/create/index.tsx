@@ -17,7 +17,9 @@ const CreateEvent = (props: Props) => {
   const [encImg , setEncImg] = useState(null);
   const { user, loading } = useAuth();
   const [file , setFile] = React.useState(null);
-
+  const setImage = (img) => {
+    setEncImg(img)
+  }
   const {
     register,
     handleSubmit,
@@ -99,7 +101,7 @@ const CreateEvent = (props: Props) => {
         textInputs={createEventInputFields}
         selectInputs={createEventSelectFields}
         onSubmit={handleSubmit(onSubmit)}
-        file = {setEncImg}
+        file = {setImage}
         register={register}
         errors={errors}
       />     
