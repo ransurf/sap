@@ -48,7 +48,7 @@ const Events = () => {
         {eventList ? (
           <EventsGroup
             title="Events"
-            description="Here are all the events in your organization!!"
+            description="All upcoming events sorted by start date"
             events={eventList}
           />
         ) : (
