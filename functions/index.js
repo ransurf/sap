@@ -29,6 +29,8 @@ function addEvent(event, auth) {
 						dateTime: event.endTime,
 						timeZone: TIME_ZONE,
 					},
+
+					location: event.location,
 				},
 			},
 			(err, res) => {
@@ -49,7 +51,9 @@ exports.addEventToCalendar = functions.https.onRequest((request, response) => {
 		description: request.body.description,
 		startTime: request.body.startTime,
 		endTime: request.body.endTime,
+		location: request.body.location,
 	};
+
 	const oAuth2Client = new OAuth2(
 		googleCredentials.web.client_id,
 		googleCredentials.web.client_secret,

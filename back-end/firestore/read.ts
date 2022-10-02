@@ -59,7 +59,7 @@ const getSpecificData = async (eventQueriesUser: FilterKeyValue[]) => {
 
 	let filters: any[] = [];
 	// go through each one and push to wheres array
-	eventQueriesUser.forEach(({key, value}) => {
+	eventQueriesUser.forEach(({ key, value }) => {
 		return filters.push(where(key, "==", value));
 	});
 	// Then have query like this:
@@ -77,7 +77,8 @@ const getUsersFromEvent = async (eventID: string) => {
 
 	const participants = eventInfo.data()?.participants;
 
-	const users = new Map<string, any>();
+	// const users = new Map<string, any>();
+	let users: any[] = [];
 
 	if (participants) {
 		for (let i = 0; i < participants.length; i++) {
@@ -85,7 +86,7 @@ const getUsersFromEvent = async (eventID: string) => {
 
 			const userSnapshot = await getDoc(userRef);
 
-			users.set(participants[i], userSnapshot.data());
+			users.push({ uid: participants[i], ...userSnapshot.data() });
 		}
 	}
 
