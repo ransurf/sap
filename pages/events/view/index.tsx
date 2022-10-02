@@ -4,6 +4,7 @@ import {
   getEvent,
   getUsersFromEvent,
   joinEvent,
+  leaveEvent
 } from "../../../back-end/functions";
 import { EventDetails } from "../../../components/EventCard";
 import Image from "next/image";
@@ -28,10 +29,14 @@ const EventInfo = (props: Props) => {
     setParticipants(res);
   };
 
-  useEffect(() => {
-    console.log("eventInfo", router.query.id);
+  const refreshData = () => {
     eventQuery();
     getParticipants();
+  }
+
+  useEffect(() => {
+    console.log("eventInfo", router.query.id);
+    refreshData();
   }, []);
 
   useEffect(() => {
@@ -40,13 +45,15 @@ const EventInfo = (props: Props) => {
   }, [event]);
 
   const onJoinEvent = () => {
-    console.log("join event");
+    console.log("join event", user, event, participants);
     joinEvent(user, event.id, "");
+    refreshData();
   };
 
   const onLeaveEvent = () => {
     console.log("leave event");
-    joinEvent(user, event.id, "");
+    leaveEvent(user, event.id);
+    refreshData();
   };
 
   const renderParticipants = useMemo(() => {
@@ -106,7 +113,7 @@ const EventInfo = (props: Props) => {
             {event.maxParticipants > 0 ? `/${event.maxParticipants}` : ""}{" "}
             Participant(s)
           </p>
-          {user && event.participants.includes(user.claims.user_id) ? (
+          {user && event.participants[user.claims.user_id] ? (
             <button
               className="btn btn-sm btn-primary"
               onClick={() => onLeaveEvent()}
@@ -138,8 +145,8 @@ const EventInfo = (props: Props) => {
             </div>
             <div className="font-bold">Location</div>
             <div className="text-sm text-secondary font-bold">
-              {event.location} @{" "}
-              {event.location !== "Online" ? event.office : ""}
+              {event.location} {" "}
+              {event.location !== "Online" ? `\@ ${event.office}` : ""}
             </div>
           </div>
         </div>

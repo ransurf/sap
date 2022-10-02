@@ -28,10 +28,14 @@ const EventInfo = (props: Props) => {
     setParticipants(res);
   };
 
-  useEffect(() => {
-    console.log("eventInfo", router.query.id);
+  const refreshData = () => {
     eventQuery();
     getParticipants();
+  }
+
+  useEffect(() => {
+    console.log("eventInfo", router.query.id);
+    refreshData();
   }, []);
 
   useEffect(() => {
@@ -42,11 +46,13 @@ const EventInfo = (props: Props) => {
   const onJoinEvent = () => {
     console.log("join event");
     joinEvent(user, event.id, "");
+    refreshData();
   };
 
   const onLeaveEvent = () => {
     console.log("leave event");
     joinEvent(user, event.id, "");
+    refreshData();
   };
 
   const renderParticipants = useMemo(() => {
