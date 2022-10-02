@@ -10,7 +10,7 @@ const joinEvent = async (user: any, eventID: string, extraInfo: string) => {
 
 	await updateDoc(doc(db, `aggregatedEvents/${eventID}`), {
 		participants: {
-			[user?.claims?.user_id]: { extraInfo: extraInfo },
+			[user.claims.user_id]: { extraInfo: extraInfo },
 		},
 	});
 };

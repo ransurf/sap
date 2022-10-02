@@ -20,7 +20,7 @@ const EventInfo = (props: Props) => {
   const router = useRouter();
   // const slug = (router.query.slug as string[]) || [];
   const eventId = router.asPath.split("/")[2];
-  console.log('EventId', eventId)
+  console.log("EventId", eventId);
   const [event, setEvent] = useState<any>(undefined);
   const [participants, setParticipants] = useState<any>([]);
   const eventQuery = async () => {
@@ -34,8 +34,11 @@ const EventInfo = (props: Props) => {
   };
 
   const refreshData = () => {
-    eventQuery();
-    getParticipants();
+    // set timeout for 1 second
+    setTimeout(() => {
+      eventQuery();
+      getParticipants();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -118,10 +121,11 @@ const EventInfo = (props: Props) => {
     });
   }, [participants]);
 
-  return <>
-    {event && (
-      <div className="page-container gap-4">
-        {/* <Modal open={true}>
+  return (
+    <>
+      {event && (
+        <div className="page-container gap-4">
+          {/* <Modal open={true}>
         <div className="modal-content">
           <div className="modal-header">
             <div className="modal-title h5">Event Details</div>
@@ -130,81 +134,84 @@ const EventInfo = (props: Props) => {
           <div className="modal-body">akldjslk</div>
         </div>
       </Modal> */}
-        <div className="flex flex-col items-center">
-          <h1 className="page-title">{event.title}</h1>
-          <p>{event.description}</p>
-          <div className="flex flex-col mt-8">
-            <p className="font-bold mb-2">
-              {event.participants?.length || 0}
-              {event.maxParticipants > 0
-                ? `/${event.maxParticipants}`
-                : ""}{" "}
-              Participant(s)
-            </p>
-            {user && event.participants && event.participants[user.claims.user_id] ? (
-              <button
-                className="btn btn-sm btn-primary"
-                onClick={() => onLeaveEvent()}
-              >
-                Leave Event
-              </button>
-            ) : (
-              <button
-                className="btn btn-sm btn-primary"
-                onClick={() => onJoinEvent()}
-              >
-                Join Event
-              </button>
-            )}
+          <div className="flex flex-col items-center">
+            <h1 className="page-title">{event.title}</h1>
+            <p>{event.description}</p>
+            <div className="flex flex-col mt-8">
+              <p className="font-bold mb-2">
+                {event.participants?.length || 0}
+                {event.maxParticipants > 0
+                  ? `/${event.maxParticipants}`
+                  : ""}{" "}
+                Participant(s)
+              </p>
+              {user &&
+              event.participants &&
+              event.participants[user.claims.user_id] ? (
+                <button
+                  className="btn btn-sm btn-primary"
+                  onClick={() => onLeaveEvent()}
+                >
+                  Leave Event
+                </button>
+              ) : (
+                <button
+                  className="btn btn-sm btn-primary"
+                  onClick={() => onJoinEvent()}
+                >
+                  Join Event
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        {console.log('full event', event)}
-        <div>
-          <h2 className="card-title font-bold">Event Details</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <div className="font-bold">Start Date</div>
-              <div className="text-sm text-secondary font-bold">
-                {moment(event.startDate?.toDate()).format("lll") || "N/A"}
-              </div>
-              <div className="font-bold">End Date</div>
-              <div className="text-sm text-secondary font-bold">
-                {moment(event.endDate?.toDate()).format("lll") || "N/A"}
-              </div>
-              <div className="font-bold">Location</div>
-              <div className="text-sm text-secondary font-bold">
-                {event.location || 'N/A'}{" "}
-                {event.location !== "Online" ? `\@ ${event.office}` : ""}
-              </div>
-              <div className="font-bold">Event Type</div>
-              <div className="text-sm text-secondary font-bold">
-                {event.eventType || "N/A"}
+          {console.log("full event", event)}
+          <div>
+            <h2 className="card-title font-bold">Event Details</h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <div className="font-bold">Start Date</div>
+                <div className="text-sm text-secondary font-bold">
+                  {moment(event.startDate?.toDate()).format("lll") || "N/A"}
+                </div>
+                <div className="font-bold">End Date</div>
+                <div className="text-sm text-secondary font-bold">
+                  {moment(event.endDate?.toDate()).format("lll") || "N/A"}
+                </div>
+                <div className="font-bold">Location</div>
+                <div className="text-sm text-secondary font-bold">
+                  {event.location || "N/A"}{" "}
+                  {event.location !== "Online" ? `\@ ${event.office}` : ""}
+                </div>
+                <div className="font-bold">Event Type</div>
+                <div className="text-sm text-secondary font-bold">
+                  {event.eventType || "N/A"}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div>
-          <h2 className="page-subtitle">Participants</h2>
-          <div className="overflow-x-auto w-full">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>From</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>{renderParticipants}</tbody>
-            </table>
+          <div>
+            <h2 className="page-subtitle">Participants</h2>
+            <div className="overflow-x-auto w-full">
+              <table className="table w-full">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>From</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>{renderParticipants}</tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-    )}
-  </>;
+      )}
+    </>
+  );
 };
 
 export default EventInfo;
