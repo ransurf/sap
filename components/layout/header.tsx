@@ -79,7 +79,7 @@ export default function Header(props: any) {
           {!user && !loading ? (
             <Image width={48} height={48} src={logo} alt="SAP Logo" />
           ) : (
-            <>
+            <div className="flex gap-4">
               <Image width={48} height={48} src={logo} alt="SAP Logo" />
               <Link href="/dashboard">
                 <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
@@ -87,7 +87,7 @@ export default function Header(props: any) {
               <Link href="/events">
                 <a className="btn btn-ghost normal-case text-xl">Events</a>
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>

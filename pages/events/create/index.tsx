@@ -54,15 +54,15 @@ const CreateEvent = (props: Props) => {
       },
     },
     {
-      label: "Max Participants (set 0 for unlimited)",
+      label: "Max Participants (Set as 0 for unlimited)",
       type: "number",
       value: "maxAttendees",
     },
     {
-      label: "Upload Image",
-      type: "file",
-      value: "image"
-    }
+      label: "Question for the viewer (leave empty for none)",
+      type: "string",
+      value: "extraInfo",
+    },
   ];
 
   const createEventSelectFields: SelectInputsProps[] = [
