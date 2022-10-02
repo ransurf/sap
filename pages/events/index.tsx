@@ -4,7 +4,7 @@ import { getAllEvents } from "../../back-end/functions";
 import Drawer from "../../components/Drawer";
 import EventsGroup from "../../components/EventsGroup";
 
-const events = () => {
+const Events = () => {
   const [eventList, setEventList] = useState([])
 
   const mockEventList = [
@@ -51,4 +51,4 @@ const events = () => {
   );
 };
 
-export default events;
+export default Events;
