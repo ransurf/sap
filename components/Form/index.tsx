@@ -12,7 +12,7 @@ interface Props {
   register: any;
   errors: any;
   classNames?: string;
-  file: (...args: any) => void;
+  file?: (...args: any) => void;
 }
 
 export interface SelectInputsProps {
@@ -106,7 +106,7 @@ export default function Form(props: Props) {
     <form className="flex flex-col gap-4 form-control" onSubmit={onSubmit}>
       {textInputs && generateTextInputFields(textInputs)}
       {selectInputs && generateSelectFields(selectInputs)}
-      <FileBase multiple={false} onDone={({base64}) => { file(base64); }}/>
+      {file && <FileBase multiple={false} onDone={({base64}) => { file(base64); }}/>}
       <button className="btn btn-primary w-full max-w-sm" type="submit">Submit</button>
     </form>
   );
