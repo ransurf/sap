@@ -123,6 +123,11 @@ const getUserData = async (user: any) => {
 	return userData;
 };
 
+const getUserDataById = async (id: string) => {
+	const userData = await Read.getUserDocById(id);
+	return userData;
+};
+
 const getUserProfile = async (user: any) => {
 	const userProfile = await Read.getUserProfile(user);
 	return userProfile;
@@ -181,6 +186,7 @@ export {
 	joinEvent,
 	deleteEvent,
 	getUserData,
+	getUserDataById,
 	getAllEvents,
 	leaveEvent,
 	getUserProfile,

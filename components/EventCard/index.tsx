@@ -30,10 +30,10 @@ const EventCard = ({ event }: Props) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title justify-between">
-          {title}
+          {title.length > 14 ? title.substring(0, 14) + '…' : title}
           <div className="badge badge-secondary text-white">{moment(startDate.toDate()).format('lll')}</div>
         </h2>
-        <p>{description}</p>
+        <p>{description.length > 14 ? description.substring(0, 40) + '…' : description}</p>
         <div className="card-actions justify-end">
           {/* {tags.map((tagName, index) => (
             <div className="badge badge-outline" key={index}>
@@ -41,7 +41,7 @@ const EventCard = ({ event }: Props) => {
             </div>
           ))} */}
         </div>
-        <button className="btn btn-primary" onClick={()=>Router.push({pathname: '/eventInfo', query: { id: id}})}> 
+        <button className="btn btn-primary" onClick={()=>Router.push({pathname: '/events/view', query: { id: id}})}> 
             View Event
       </button>
       </div>

@@ -25,6 +25,17 @@ const getUserDoc = async (user: any) => {
 	return userSnapshot.data();
 };
 
+const getUserDocById = async (id: string) => {
+	console.log('getuserdocbyid', id)
+	const userRef = doc(db, `Users/${id}`);
+
+	const userSnapshot = await getDoc(userRef);
+
+	console.log("Snapshot in getUserDocById", userSnapshot.data());
+
+	return userSnapshot.data();
+};
+
 const getUserProfile = async (user: any) => {
 	const userProfile = user?.claims;
 
@@ -103,6 +114,7 @@ const getSpecificEvent = async (eventID: string) => {
 
 export {
 	getUserDoc,
+	getUserDocById,
 	getAggregatedEvents,
 	getUserProfile,
 	getUsersFromEvent,
