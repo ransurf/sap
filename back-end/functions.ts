@@ -185,6 +185,38 @@ const updateUserInfo = async (userInfo: UserInfo) => {
   return updatedUserInfo;
 };
 
+const updateEventInfo = async (eventInfo: EventInfo) => {
+  const {
+    user,
+    title,
+    image,
+    startDate,
+    endDate,
+    eventType,
+    office,
+    description,
+    location,
+    host,
+    maxAttendees,
+    extraInfo,
+  } = eventInfo;
+  const updatedEventInfo = await Update.updateEventInfo({
+    user,
+    title,
+    image,
+    startDate,
+    endDate,
+    description,
+    eventType,
+    location,
+    office,
+    host,
+    maxAttendees,
+    extraInfo,
+  });
+  return updatedEventInfo;
+};
+
 export {
   signUp,
   signUpGoogle,
@@ -201,6 +233,7 @@ export {
   leaveEvent,
   getUserProfile,
   updateUserInfo,
+  updateEventInfo,
   getUsersFromEvent,
   getEvent,
 };
