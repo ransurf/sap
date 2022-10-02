@@ -1,10 +1,20 @@
 import React from 'react'
 import Drawer from '../../components/Drawer'
+import { getUsersFromEvent, getAllEvents } from '../../back-end/functions'
 const dash = () => {
+
+	const onClick = async () => {
+		console.log('clicked')
+		//get all events
+		const users = await getAllEvents();
+
+		console.log(users)
+	}
+
   return (
     <div>
       <Drawer/>
-      dash
+      <button onClick={onClick}>Get All Events</button>
     
     </div>
   )

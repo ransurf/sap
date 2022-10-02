@@ -6,6 +6,7 @@ import {
 	where,
 	getDocs,
 	Query,
+	orderBy,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig/init";
 
@@ -31,11 +32,22 @@ const getUserProfile = async (user: any) => {
 };
 
 const getAggregatedEvents = async () => {
-	const aggregatedEventsRef = query(collection(db, "aggregatedEvents"));
+	const aggregatedEventsRef = collection(db, "aggregatedEvents");
+	const aggregatedEventsQuery = query(
+		aggregatedEventsRef,
+		orderBy("startDate", "asc")
+	);
 
-	const eventsSnapshot = await getDocs(aggregatedEventsRef);
+	const eventsSnapshot = await getDocs(aggregatedEventsQuery);
 
-	return eventsSnapshot;
+	let events: any[] = [];
+
+	eventsSnapshot.docs.map((doc) => {
+		console.log(doc.id);
+		events.push({ id: doc.id, ...doc.data() });
+	});
+
+	return events;
 };
 
 const getSpecificData = async (eventQueriesUser: FilterKeyValue[]) => {
@@ -45,12 +57,15 @@ const getSpecificData = async (eventQueriesUser: FilterKeyValue[]) => {
 	// 	eventQuery = eventQuery.k;
 	// });
 
-	const specificData = query(
-		collection(db, "aggregatedEvents"),
-		where(eventQueriesUser[0].key, "==", eventQueriesUser[0].value)
-	);
+	let filters: any[] = [];
+	// go through each one and push to wheres array
+	eventQueriesUser.forEach(({key, value}) => {
+		return filters.push(where(key, "==", value));
+	});
+	// Then have query like this:
+	const filteredEvents = query(collection(db, "aggregatedEvents"), ...filters);
 
-	const eventsSnapshot = await getDocs(specificData);
+	const eventsSnapshot = await getDocs(filteredEvents);
 
 	return eventsSnapshot;
 };
@@ -64,15 +79,32 @@ const getUsersFromEvent = async (eventID: string) => {
 
 	const users = new Map<string, any>();
 
-	for (let i = 0; i < participants.length; i++) {
-		const userRef = doc(db, `Users/${participants[i]}`);
+	if (participants) {
+		for (let i = 0; i < participants.length; i++) {
+			const userRef = doc(db, `Users/${participants[i]}`);
 
-		const userSnapshot = await getDoc(userRef);
+			const userSnapshot = await getDoc(userRef);
 
-		users.set(participants[i], userSnapshot.data());
+			users.set(participants[i], userSnapshot.data());
+		}
 	}
 
 	return users;
 };
 
-export { getUserDoc, getAggregatedEvents, getUserProfile, getUsersFromEvent, getSpecificData };
+const getSpecificEvent = async (eventID: string) => {
+	const eventInfoRef = doc(db, `aggregatedEvents/${eventID}`);
+
+	const eventInfo = await getDoc(eventInfoRef);
+
+	return eventInfo.data();
+};
+
+export {
+	getUserDoc,
+	getAggregatedEvents,
+	getUserProfile,
+	getUsersFromEvent,
+	getSpecificData,
+	getSpecificEvent,
+};

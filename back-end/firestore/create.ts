@@ -67,6 +67,7 @@ const createNewEvent = async (
 		host: user?.claims.user_id,
 		maxAttendees: maxAttendees,
 		extraInfo: extraInfo ? extraInfo : "",
+		participants: arrayUnion(user?.claims.user_id),
 	});
 
 	const eventID = docRef.id;

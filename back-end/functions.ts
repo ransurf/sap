@@ -131,35 +131,56 @@ const getAllEvents = async () => {
   return allEvents;
 };
 
+const getUsersFromEvent = async (eventID: string) => {
+	const usersFromEvent = await Read.getUsersFromEvent(eventID);
+	return usersFromEvent;
+};
+
+const getEvent = async (eventID: string) => {
+	const specificEvent = await Read.getSpecificEvent(eventID);
+	return specificEvent;
+};
+
 const updateUserInfo = async (userInfo: UserInfo) => {
-  const { user, firstName, lastName, profilePic, bio, age, position, location } = userInfo;
+	const {
+		user,
+		firstName,
+		lastName,
+		profilePic,
+		bio,
+		age,
+		position,
+		location,
+	} = userInfo;
 
-  const updatedUserInfo = await Update.updateUserInfo(
-    user,
-    firstName,
-    lastName,
-    profilePic,
-    bio,
-    age,
-    position,
-    location
-  );
+	const updatedUserInfo = await Update.updateUserInfo(
+		user,
+		firstName,
+		lastName,
+		profilePic,
+		bio,
+		age,
+		position,
+		location
+	);
 
-  return updatedUserInfo;
+	return updatedUserInfo;
 };
 
 export {
-  signUp,
-  signUpGoogle,
-  signInUser,
-  createUserDocument,
-  createUserInformation,
-  createNewEvent,
-  joinEvent,
-  deleteEvent,
-  getUserData,
-  getAllEvents,
-  leaveEvent,
-  getUserProfile,
-  updateUserInfo,
+	signUp,
+	signUpGoogle,
+	signInUser,
+	createUserDocument,
+	createUserInformation,
+	createNewEvent,
+	joinEvent,
+	deleteEvent,
+	getUserData,
+	getAllEvents,
+	leaveEvent,
+	getUserProfile,
+	updateUserInfo,
+	getUsersFromEvent,
+	getEvent,
 };
