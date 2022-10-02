@@ -102,6 +102,7 @@ export default function Settings() {
     const newData = {
       ...data,
       user,
+      "profilePic": user?.claims.picture,
     };
     console.log("uploadUserData", newData, user);
     updateUserInfo(newData)
