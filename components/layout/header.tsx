@@ -70,7 +70,7 @@ export default function Header(props: any) {
     //         </ul>
     //       </div>
     //     </div>
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 shadow-xl">
       <div className="navbar-start items-start">
         {/* <Link href="/dashboard">
         </Link> */}

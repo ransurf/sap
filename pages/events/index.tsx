@@ -32,8 +32,9 @@ const Events = () => {
   useEffect(() => { console.log("all events", eventList) }, [eventList])
   
   useEffect(()=>{console.log(filter, 'set')},[filter])
+  
   return (
-    <div className="page-container flex-row">
+    <div className="page-container flex-row gap-8">
       <Drawer setFilter = {setEventFilter} filters={filterValues}/>
       <div>
         {eventList ? <EventsGroup title="Events" description="Here are all the events being hosted by your coworkers!!" events={eventList}/> : "loading"}
