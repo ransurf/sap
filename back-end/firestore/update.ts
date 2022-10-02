@@ -24,7 +24,7 @@ const joinEvent = async (
 		aggregatedEventsRef,
 		{
 			participants: arrayUnion({
-				uid: [user?.claims?.user_id],
+				uid: user?.claims?.user_id,
 				extraInfo: extraInformation,
 			}),
 		},

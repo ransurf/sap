@@ -105,10 +105,13 @@ const createNewEvent = async ({
 		"https://us-central1-saphack2022.cloudfunctions.net/addEventToCalendar",
 		{
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json",  },
 			body: JSON.stringify(eventInfo),
 		}
 	);
+
+	console.log("returnedData: ", returnedData);
+	
 };
 
 export { createUserDocument, createUserInformation, createNewEvent };
