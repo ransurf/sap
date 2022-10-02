@@ -131,7 +131,6 @@ const EventInfo = (props: Props) => {
             <tbody>{renderParticipants}</tbody>
           </table>
         </div>
-        <div>{JSON.stringify(event)}</div>
       </div>
     </div>
   ) : (

@@ -23,7 +23,7 @@ function DebuggerPlugin(userConfig = {}) {
         console.log('Plugins Initialized')
       },
       page: ({ payload }) => {
-        console.log("page call", payload)
+        console.log("page call")
       },
       /* Track event */
       track: ({ payload }) => {
