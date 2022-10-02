@@ -11,7 +11,6 @@ const dash = () => {
   const filterValues = [
     "My Events",
     "Joined Events",
-    "Clear Filter"
   ]
   const setEventFilter = (value) => { setFilter(value) }
 
@@ -30,10 +29,10 @@ const dash = () => {
   useEffect(()=>{
     console.log(filter, 'filter set')
     if (filter == filterValues[0] ) {
-      setEventList(eventList.filter(event=>event.host === user.claims.user_id))
+      setEventList(allEvents.filter(event=>event.host === user.claims.user_id))
     }
     else if (filter == filterValues[1]) {
-      setEventList(eventList.filter(event=>event.host === user.claims.user_id))
+      setEventList(allEvents.filter(event=> event.participants.includes(user.claims.user_id)))
     }
     
   },[filter])
