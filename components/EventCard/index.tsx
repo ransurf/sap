@@ -2,6 +2,8 @@ import Link from "next/link";
 import Router from "next/router";
 import React from "react";
 import moment from "moment";
+import Image from "next/image";
+
 export interface EventDetails {
   id: string;
   title: string;
@@ -12,19 +14,19 @@ export interface EventDetails {
   location: string;
   office: string;
   eventType: string;
+  image: string;
 }
 
 interface Props {
   event: EventDetails;
 }
 const EventCard = ({ event }: Props) => {
-  const { id, title, description, startDate, location, office, eventType} = event;
+  const { id, title, description, startDate, location, office, eventType, image} = event;
   const tags = [eventType]
   return (
-    <div className="card w-96 bg-base-100 shadow-xl" key={title}>
+    <div className="card card-side w-200 bg-base-100 shadow-xl" key={title}>
       <figure>
-        <img src={"https://placeimg.com/400/225/arch"} alt="Shoes" />
-        {/* <Image src={`${base64Decode(image)}`} alt="Shoes" /> */}
+        {image?<Image width={300} height={150} src={image} alt="Shoes" />: <img src={"https://placeimg.com/400/225/arch"} alt="Shoes" />}
       </figure>
       <div className="card-body">
         <h2 className="card-title justify-between">
@@ -39,10 +41,10 @@ const EventCard = ({ event }: Props) => {
             </div>
           ))} */}
         </div>
-      </div>
-      <button className="btn" onClick={()=>Router.push({pathname: '/eventInfo', query: { id: id}})}> 
+        <button className="btn btn-primary" onClick={()=>Router.push({pathname: '/eventInfo', query: { id: id}})}> 
             View Event
       </button>
+      </div>
     </div>
   );
 };
