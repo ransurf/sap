@@ -34,7 +34,7 @@ const dash = () => {
       setDesc("Here are all the events that you have made:")
     }
     else if (filter == filterValues[1]) {
-      setEventList(allEvents.filter(event=> event.participants.includes(user.claims.user_id)))
+      setEventList(allEvents.filter(event => Array.from(event.participants).includes(user.claims.user_id)))
       setDesc("Here are all the events that you are a part of:")
     }
     else {
