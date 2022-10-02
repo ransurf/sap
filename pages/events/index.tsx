@@ -31,9 +31,9 @@ const Events = () => {
     if (filter?.location) {
       tempEvents = tempEvents.filter((event) => event.location === filter.location);
     }
-    // if (filter.eventType) {
-    //   setEventList(eventList.filter(event=>event.location === filter.location))
-    // }
+    if (filter?.eventType) {
+      tempEvents = tempEvents.filter((event) => event.eventType === filter.eventType);
+    }
     if (filter?.office) {
       tempEvents = tempEvents.filter((event) => event.office === filter.office);
     }

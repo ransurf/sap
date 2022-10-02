@@ -29,7 +29,7 @@ const EventInfo = (props: Props) => {
   };
   const getParticipants = async () => {
     const res = await getUsersFromEvent(eventId);
-    console.log("participants", res);
+    console.log("participants ::", res);
     setParticipants(res);
   };
 
@@ -86,9 +86,7 @@ const EventInfo = (props: Props) => {
                   : ""}{" "}
                 Participant(s)
               </p>
-              {user &&
-              event.participants &&
-              event.participants[user.claims.user_id] ? (
+              {user && event && event.participants?.some(particip => particip.uid == user.claims.user_id ) ? (
                 <button
                   className="btn btn-sm btn-primary"
                   onClick={() => onLeaveEvent()}
@@ -134,7 +132,7 @@ const EventInfo = (props: Props) => {
           <div>
             <h2 className="page-subtitle">Participants</h2>
                 <ProfileTable
-                  profiles={participants}
+                  profiles={event?.participants}
                 />
           </div>
         </div>
