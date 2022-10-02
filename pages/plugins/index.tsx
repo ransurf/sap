@@ -14,7 +14,7 @@ const Plugins = (props: Props) => {
       <button className="btn btn-primary max-w-sm self-end">Connect</button>
       <h2 className="font-bold text-xl mt-4">Discord</h2>
       <p>
-        &quot;Discord is a VoIP and instant messaging social platform. Users have the ability to communicate with voice calls, video calls, text messaging, media and files in private chats or as part of communities called "servers". A server is a collection of persistent chat rooms and voice channels which can be accessed via invite links. Discord runs on Windows, macOS, Android, iOS, iPadOS, Linux, and in web browsers. As of 2021, the service has over 350 million registered users and over 150 million monthly active users.
+        Discord is a VoIP and instant messaging social platform. Users have the ability to communicate with voice calls, video calls, text messaging, media and files in private chats or as part of communities called &quot;servers&quot;. A server is a collection of persistent chat rooms and voice channels which can be accessed via invite links. Discord runs on Windows, macOS, Android, iOS, iPadOS, Linux, and in web browsers. As of 2021, the service has over 350 million registered users and over 150 million monthly active users.
       </p>
       <button className="btn btn-primary max-w-sm self-end">Connect</button>
       <br/>
