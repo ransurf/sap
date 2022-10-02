@@ -1,13 +1,17 @@
 import React, {useMemo} from "react";
 import Router from "next/router";
+import { getAllUsers, getUserData } from "../../back-end/functions";
 
 type Props = {
     profiles: any;
 };
 
 const ProfileTable = ({profiles: participants}: Props) => {
+  console.log("participants",participants)
+  
   const renderParticipants = useMemo(() => {
-    return participants.map((participant: any, index: number) => {
+      
+      return participants.map((participant: any, index: number) => {
       const {
         id,
         firstName,
@@ -18,6 +22,8 @@ const ProfileTable = ({profiles: participants}: Props) => {
         location,
         email,
       } = participant;
+
+
       return (
         <tr key={index}>
           <th>{index + 1}</th>
