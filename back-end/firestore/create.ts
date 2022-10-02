@@ -50,6 +50,7 @@ const createNewEvent = async (
 	startDate: Timestamp,
 	endDate: Timestamp,
 	description: string,
+	eventType: string,
 	location: string,
 	office: string,
 	host: string,
@@ -57,12 +58,14 @@ const createNewEvent = async (
 	extraInfo: string
 ) => {
 	const docRef = doc(collection(db, "aggregatedEvents"));
+	console.log('eventType', eventType)
 	await setDoc(docRef, {
 		title: title,
 		image: image ? image : "",
 		startDate: startDate,
 		endDate: endDate,
 		description: description,
+		eventType: eventType,
 		location: location,
 		office: office,
 		host: user?.claims.user_id,
