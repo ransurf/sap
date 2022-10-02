@@ -15,6 +15,7 @@ import { useAuth } from "../../../back-end/authContext";
 import ProfileTable from "../../../components/ProfileTable";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
+import analytics from "../../../utils/analytics";
 // import Modal from "react-daisyui";
 
 type Props = {};
@@ -64,6 +65,11 @@ const EventInfo = (props: Props) => {
   const onJoinEvent = () => {
     console.log("join event", user, event, participants);
     joinEvent(user, event.id, "");
+    analytics.track('event-joined',{
+      'eventType': event.eventType,
+      'location': event.location,
+      'office': event.office
+    })
     refreshData();
   };
 

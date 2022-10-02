@@ -10,7 +10,7 @@ import {LocationSelect, OfficeSelect, EventTypeSelect} from '../../../formData'
 import {createNewEvent} from '../../../back-end/functions'
 import Router from "next/router";
 import {useState} from 'react'
-
+import analytics from '../../../utils/analytics'
 type Props = {};
 
 const CreateEvent = (props: Props) => {
@@ -88,6 +88,13 @@ const CreateEvent = (props: Props) => {
       ...formattedData,
       user,
     };
+    analytics.track('event-created',{
+      'eventType': newData.eventType,
+      'location': newData.location,
+      'office': newData.office,
+      'description': newData.description,
+      'title': newData.title
+    })
     console.log("createEvent", newData, user);
     createNewEvent(newData);
     Router.push('/dashboard')
