@@ -6,7 +6,7 @@ const dash = () => {
 	const onClick = async () => {
 		console.log('clicked')
 		//get all events
-		const users = await getAllEvents();
+		const users = await getUsersFromEvent("3EITQccVLierGsnA64uo");
 
 		console.log(users)
 	}

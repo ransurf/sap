@@ -104,8 +104,8 @@ const createNewEvent = async (eventInfo: EventInfo) => {
 	return createEvent;
 };;
 
-const joinEvent = async (user: any, eventID: any, discordID: string) => {
-	await Update.joinEvent(user, eventID, discordID);
+const joinEvent = async (user: any, eventID: any, extraInfo: string) => {
+	await Update.joinEvent(user, eventID, extraInfo);
 };
 
 const leaveEvent = async (user: any, eventID: any) => {
