@@ -43,7 +43,7 @@ const Events = () => {
 
   return (
     <div className="page-container flex-row gap-8">
-      <Drawer setFilter={setEventFilter} form={true} />
+      <Drawer setFilter={setEventFilter} form={true} reset={true}/>
       <div>
         {eventList ? (
           <EventsGroup
