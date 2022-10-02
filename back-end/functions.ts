@@ -141,6 +141,11 @@ const getAllEvents = async () => {
   return allEvents;
 };
 
+const getAllUsers = async () => {
+  const allEvents = await Read.getAllUsers();
+  return allEvents;
+};
+
 const getUsersFromEvent = async (eventID: string) => {
   const usersFromEvent = await Read.getUsersFromEvent(eventID);
   return usersFromEvent;
@@ -191,6 +196,7 @@ export {
   getUserData,
   getUserDataById,
   getAllEvents,
+  getAllUsers,
   leaveEvent,
   getUserProfile,
   updateUserInfo,

@@ -44,7 +44,11 @@ const Profile = (props: Props) => {
             </h2>
             <p className="font-bold">
               Chat with me{" "}
-              <span className="text-secondary"><a className="link" href={`mailto:${profile.email}`}>{profile.email}</a></span>
+              <span className="text-secondary">
+                <a className="link" href={`mailto:${profile.email}`}>
+                  {profile.email}
+                </a>
+              </span>
             </p>
           </div>
         </div>

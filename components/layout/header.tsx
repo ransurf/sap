@@ -134,7 +134,7 @@ export default function Header(props: any) {
                 >
                   <li>
                     <Link href={`/profile?id=${user.claims.user_id}`}>
-                      <a className="btn btn-ghost normal-case">My Profile</a>
+                      <a className="btn btn-ghost normal-case">Profile</a>
                     </Link>
                   </li>
                   <li>

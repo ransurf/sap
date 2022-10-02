@@ -61,6 +61,24 @@ const getAggregatedEvents = async () => {
   return events;
 };
 
+const getAllUsers = async () => {
+  const usersRef = collection(db, "Users");
+  const usersQuery = query(
+    usersRef,
+  );
+
+  const eventsSnapshot = await getDocs(usersQuery);
+
+  let users: any[] = [];
+
+  eventsSnapshot.docs.map((doc) => {
+    console.log(doc.id);
+    users.push({ id: doc.id, ...doc.data() });
+  });
+
+  return users;
+};
+
 const getSpecificData = async (eventQueriesUser: FilterKeyValue[]) => {
   // let eventQuery: Query = collection(db, "aggregatedEvents");
 
@@ -122,6 +140,7 @@ export {
   getUserDoc,
   getUserDocById,
   getAggregatedEvents,
+  getAllUsers,
   getUserProfile,
   getUsersFromEvent,
   getSpecificData,
