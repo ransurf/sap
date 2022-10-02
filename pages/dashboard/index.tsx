@@ -1,37 +1,68 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Drawer from "../../components/Drawer";
 import EventsGroup from "../../components/EventsGroup";
 import { getUsersFromEvent, getAllEvents } from "../../back-end/functions";
-const dash = () => {
-  const mockEventList = [
-    {
-      id: "123123123",
-      title: "Event 1",
-      description: "This is a description",
-      startDate: new Date(Date.now()),
-      endDate: new Date(Date.now()),
-      maxParticipants: 10,
-      location: "In Person",
-      office: "Toronto",
-      eventType: "Video Games",
-    },
-  ];
-
-  const onClick = async () => {
-    console.log("clicked");
-    //get all events
-    const users = await getUsersFromEvent("3EITQccVLierGsnA64uo");
-
-    console.log(users);
+import { useAuth } from "../../back-end/authContext";
+const Dashboard = () => {
+  const { user, loading } = useAuth();
+  const [eventList, setEventList] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
+  const [filter, setFilter] = useState();
+  const [desc, setDesc] = useState("");
+  const filterValues = ["My Events", "Joined Events"];
+  const setEventFilter = (value) => {
+    setFilter(value);
   };
 
+  const getEvents = async () => {
+    const events = await getAllEvents();
+    setAllEvents(events);
+    setEventList(events);
+  };
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+  useEffect(() => {
+    console.log("all events", eventList);
+  }, [eventList]);
+
+  useEffect(() => {
+    console.log(filter, "filter set");
+    if (filter == filterValues[0]) {
+      setEventList(
+        allEvents.filter((event) => event.host === user.claims.user_id)
+      );
+      setDesc("Here are all the events that you have made:");
+    } else if (filter == filterValues[1]) {
+      setEventList(
+        allEvents.filter((event) =>
+          Array.from(event.participants).includes(user.claims.user_id)
+        )
+      );
+      setDesc("Here are all the events that you are a part of:");
+    } else {
+      setEventList(allEvents);
+    }
+  }, [filter]);
+
   return (
-    <div>
-      <Drawer />
-      <button onClick={onClick}>Get All Events</button>
-      {/* <EventsGroup title="Events" description="" events={mockEventList} /> */}
+    <div className="page-container flex-row gap-8">
+      <Drawer setFilter={setEventFilter} filters={filterValues} />
+      <div>
+        {eventList ? (
+          <EventsGroup
+            title={filter ? filter : "Dashboard"}
+            description={desc}
+            events={eventList}
+          />
+        ) : (
+          "loading"
+        )}
+      </div>
     </div>
   );
 };
 
-export default dash;
+export default Dashboard;

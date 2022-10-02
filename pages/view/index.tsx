@@ -4,11 +4,11 @@ import {
   getEvent,
   getUsersFromEvent,
   joinEvent,
-} from "../../back-end/functions";
-import { EventDetails } from "../../components/EventCard";
+} from "../../../back-end/functions";
+import { EventDetails } from "../../../components/EventCard";
 import Image from "next/image";
 import moment from "moment";
-import { useAuth } from "../../back-end/authContext";
+import { useAuth } from "../../../back-end/authContext";
 // import Modal from "react-daisyui";
 
 type Props = {};
@@ -28,24 +28,36 @@ const EventInfo = (props: Props) => {
     setParticipants(res);
   };
 
-  useEffect(() => {
-    console.log("eventInfo", router.query.id);
+  const refreshData = () => {
     eventQuery();
     getParticipants();
+  }
+
+  useEffect(() => {
+    console.log("eventInfo", router.query.id);
+    refreshData();
   }, []);
 
   useEffect(() => {
+    console.log("user", user);
     console.log("current event", event);
   }, [event]);
 
   const onJoinEvent = () => {
     console.log("join event");
     joinEvent(user, event.id, "");
+    refreshData();
+  };
+
+  const onLeaveEvent = () => {
+    console.log("leave event");
+    joinEvent(user, event.id, "");
+    refreshData();
   };
 
   const renderParticipants = useMemo(() => {
     return participants.map((participant: any, index: number) => {
-      const { firstName, lastName, position, location } = participant;
+      const { firstName, lastName, position, location, email } = participant;
       return (
         <tr key={index}>
           <th>{index + 1}</th>
@@ -64,13 +76,14 @@ const EventInfo = (props: Props) => {
               </div>
               <div>
                 <div className="font-bold">{`${firstName} ${lastName}`}</div>
-                <div className="text-sm opacity-50">{location}</div>
+                <span className="badge badge-ghost badge-sm">{position}</span>
               </div>
             </div>
           </td>
           <td>
-            <span className="badge badge-ghost badge-sm">{position}</span>
+            <div className="text-sm text-secondary">{location}</div>
           </td>
+          <td>{email}</td>
           {/* <th>
                 <button className="btn btn-ghost btn-xs">details</button>
               </th> */}
@@ -99,29 +112,38 @@ const EventInfo = (props: Props) => {
             {event.maxParticipants > 0 ? `/${event.maxParticipants}` : ""}{" "}
             Participant(s)
           </p>
-          <button
-            className="btn btn-sm btn-primary"
-            onClick={() => onJoinEvent()}
-          >
-            Join Event
-          </button>
+          {user && event.participants.includes(user.claims.user_id) ? (
+            <button
+              className="btn btn-sm btn-primary"
+              onClick={() => onLeaveEvent()}
+            >
+              Leave Event
+            </button>
+          ) : (
+            <button
+              className="btn btn-sm btn-primary"
+              onClick={() => onJoinEvent()}
+            >
+              Join Event
+            </button>
+          )}
         </div>
       </div>
       {/* show start and end date */}
       <div>
-        <h2 className="card-title">Event Details</h2>
+        <h2 className="card-title font-bold">Event Details</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <div className="font-bold">Start Date</div>
-            <div className="text-sm opacity-50">
+            <div className="text-sm text-secondary font-bold">
               {moment(event.startDate.toDate()).format("lll")}
             </div>
             <div className="font-bold">End Date</div>
-            <div className="text-sm opacity-50">
+            <div className="text-sm text-secondary font-bold">
               {moment(event.endDate.toDate()).format("lll")}
             </div>
             <div className="font-bold">Location</div>
-            <div className="text-sm opacity-50">
+            <div className="text-sm text-secondary font-bold">
               {event.location} @{" "}
               {event.location !== "Online" ? event.office : ""}
             </div>
@@ -136,9 +158,9 @@ const EventInfo = (props: Props) => {
             <thead>
               <tr>
                 <th>#</th>
-
                 <th>Name</th>
-                <th>Job</th>
+                <th>From</th>
+                <th>Email</th>
               </tr>
             </thead>
             <tbody>{renderParticipants}</tbody>
