@@ -8,6 +8,7 @@ const dash = () => {
   const [eventList, setEventList] = useState([])
   const [allEvents, setAllEvents] = useState([])
   const [filter, setFilter] = useState()
+  const [desc, setDesc] = useState("")
   const filterValues = [
     "My Events",
     "Joined Events",
@@ -30,9 +31,11 @@ const dash = () => {
     console.log(filter, 'filter set')
     if (filter == filterValues[0] ) {
       setEventList(allEvents.filter(event=>event.host === user.claims.user_id))
+      setDesc("Here are all the events that you have made:")
     }
     else if (filter == filterValues[1]) {
       setEventList(allEvents.filter(event=> event.participants.includes(user.claims.user_id)))
+      setDesc("Here are all the events that you are a part of:")
     }
     
   },[filter])
@@ -43,7 +46,7 @@ const dash = () => {
     <div className="page-container flex-row">
       <Drawer setFilter = {setEventFilter} filters={filterValues}/>
       <div>
-        {eventList ? <EventsGroup title={filter? filter:"Dashboard"} description="Here are all the events being hosted by your coworkers!!" events={eventList}/> : "loading"}
+        {eventList ? <EventsGroup title={filter? filter:"Dashboard"} description={desc} events={eventList}/> : "loading"}
       </div>
     </div>
   );
