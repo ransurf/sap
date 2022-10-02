@@ -37,6 +37,9 @@ const dash = () => {
       setEventList(allEvents.filter(event=> event.participants.includes(user.claims.user_id)))
       setDesc("Here are all the events that you are a part of:")
     }
+    else {
+      setEventList(allEvents)
+    }
     
   },[filter])
 

@@ -15,6 +15,7 @@ const Drawer = (props: Props) => {
               {filters?.map((val,index) => {
                 return <li onClick={()=>setFilter(val)}><a>{val}</a></li>
               })}
+              <button className='btn btn-secondary' onClick={()=>setFilter(null)}>clear filter</button>
             </ul>
         
         </div>
