@@ -1,10 +1,11 @@
 import {
-  arrayRemove,
-  updateDoc,
-  doc,
-  arrayUnion,
-  setDoc,
-  collection,
+	arrayRemove,
+	updateDoc,
+	doc,
+	arrayUnion,
+	setDoc,
+	collection,
+	getDoc,
 } from "firebase/firestore";
 import { EventInfo } from "../functions";
 import { db } from "../firebaseConfig/init";
@@ -41,15 +42,31 @@ const leaveEvent = async (user: any, eventID: string) => {
     });
   }
 
-  let aggregatedEventsRef = doc(db, `aggregatedEvents/${eventID}`);
-  await setDoc(
-    aggregatedEventsRef,
-    {
-      participants: arrayRemove(user?.claims?.user_id),
-    },
-    { merge: true }
-  );
-};
+	let aggregatedEventsRef = doc(db, `aggregatedEvents/${eventID}`);
+
+	let participants = await getDoc(aggregatedEventsRef).then((doc) => {
+		return doc.data()?.participants;
+	});
+
+	let newParticipants = participants?.filter(
+		(participant: any) => participant.uid !== user?.claims?.user_id
+	);
+
+	await updateDoc(aggregatedEventsRef, {
+		participants: newParticipants,
+	});
+
+	// await setDoc(
+	// 	aggregatedEventsRef,
+	// 	{
+	// 		participants: arrayRemove({
+	// 			uid: user?.claims?.user_id.toString(),
+	// 			extraInfo: "",
+	// 		}),
+	// 	},
+	// 	{ merge: true }
+	// );
+};;
 
 const updateUserInfo = async (
   user: any,
