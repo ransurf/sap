@@ -17,9 +17,9 @@ const Home: NextPage = () => {
   const loginWithGoogle = async () => {
     const request = await APIFirebase.signUpGoogle();
     if (!request) {
-      console.log("Signup With Google Failed!");
+      console.log("Signin With Google Failed!");
     } else {
-      console.log("Signup With Google Successful!", request);
+      console.log("Signin With Google Successful!", request);
       analytics.identify(`${request.uid}`, {
         email: request.email,
         name: request.displayName,
