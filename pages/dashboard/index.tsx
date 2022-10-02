@@ -46,7 +46,7 @@ const dash = () => {
 
 
   return (
-    <div className="page-container flex-row">
+    <div className="page-container flex-row gap-8">
       <Drawer setFilter = {setEventFilter} filters={filterValues}/>
       <div>
         {eventList ? <EventsGroup title={filter? filter:"Dashboard"} description={desc} events={eventList}/> : "loading"}
