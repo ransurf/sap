@@ -3,7 +3,7 @@ import Router from "next/router";
 import React from "react";
 
 export interface EventDetails {
-  eventId: string;
+  id: string;
   title: string;
   description: string;
   tags: string[];
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const EventCard = ({ event }: Props) => {
-  const { eventId, title, description, date } = event;
+  const { id, title, description, date } = event;
   console.log("event card", event);
   return (
     <div className="card w-96 bg-base-100 shadow-xl" key={title}>
@@ -36,7 +36,7 @@ const EventCard = ({ event }: Props) => {
           ))} */}
         </div>
       </div>
-      <button className="btn" onClick={()=>Router.push({pathname: '/eventInfo', query: { id: eventId}})}> 
+      <button className="btn" onClick={()=>Router.push({pathname: '/eventInfo', query: { id: id}})}> 
             View Event
       </button>
     </div>
